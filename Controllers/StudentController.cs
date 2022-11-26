@@ -25,8 +25,37 @@ public class StudentController : ControllerBase
     }
 
     // POST action
-
+    [HttpPost]
+    public ActionResult Post(Student student)
+    {
+        StudentService.Add(student);
+        return CreatedAtAction("Created new student, ", new {student.Id}, student);
+    }
     // PUT action
+    [HttpPut("{id}")]
+    public ActionResult Put(Student student, int id)
+    {
+        if(student.Id != id)
+        {
+            return BadRequest();
+        }
+        if(StudentService.Get(id) is null)
+        {
+            return NotFound();
+        }
+        StudentService.Update(student);
+        return NoContent();
 
+    }
     // DELETE action
+    [HttpDelete]
+    public ActionResult Delete(int id)
+    {
+        if(StudentService.Get(id) is null)
+        {
+            return NotFound();
+        }
+        StudentService.Delete(id);
+        return NoContent();
+    }
 }

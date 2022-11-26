@@ -1,13 +1,12 @@
-using TiktikHttpServer.Models;
+namespace TiktikHttpServer.Models;
 
-
-class Lesson
+public class Lesson
 {
-    public int Id;
-    public int TeacherId;
-    public int StudentId;
-    public DateTime _Date;
-    public String? Comment;
+    public int Id{get;set;}
+    public int TeacherId{get;set;}
+    public int StudentId{get;set;}
+    public DateTime Date{get;set;}
+    public String? Comment{get;set;}
 }
 
 
