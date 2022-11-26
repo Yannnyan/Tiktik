@@ -11,11 +11,7 @@ public class LessonController : ControllerBase
     public LessonController(){}
 
     [HttpGet]
-    public ActionResult<List<Lesson>> GetAll() => new List<Lesson>
-        {
-            new Lesson {Id = 1, TeacherId = 1, Date= DateTime.Now , StudentId = 1, Comment = "Meet me at new zealand."},
-            new Lesson {Id = 2, TeacherId = 2, Date= DateTime.Now ,StudentId = 2, Comment = "Ariel, Rehov Hatziyonut."}
-        };
+    public ActionResult<List<Lesson>> GetAll() => LessonService.GetAll();
 
     [HttpGet("{isTeacher}/{Id}")]
     public ActionResult<List<Lesson>> Get(bool isTeacher, int id) 
