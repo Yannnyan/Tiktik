@@ -19,7 +19,7 @@ public class StudentService
     public static List<Student> GetAll() => Students;
 
     public static Student? Get(int id) => Students.FirstOrDefault(p => p.Id == id);
-
+    public static Student? Get(String email) => Students.FirstOrDefault(p => p.Email == email);
     public static void Add(Student student)
     {
         student.Id = nextId++;

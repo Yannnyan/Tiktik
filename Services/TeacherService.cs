@@ -20,7 +20,7 @@ public class TeacherService
     public static List<Teacher> GetAll() => Teachers;
 
     public static Teacher? Get(int id) => Teachers.FirstOrDefault(p => p.Id == id);
-
+    public static Teacher? Get(String email) => Teachers.FirstOrDefault(p => p.Email == email);
     public static void Add(Teacher Teacher)
     {
         Teacher.Id = nextId++;
