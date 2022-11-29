@@ -1,25 +1,39 @@
-var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+bool to_test_Database = true;
+if(to_test_Database)
+    testStuff.test();
+else
+    RunServer.Run(args);
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+
+
+
+
+
+/*
+using System.Net.Http.Headers;
+
+using HttpClient client = new();
+// client.DefaultRequestHeaders.Accept.Clear();
+// client.DefaultRequestHeaders.Accept.Add(
+//     new MediaTypeWithQualityHeaderValue("application/vnd.github.v3+json"));
+// client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
+
+await ProcessRepositoriesAsync(client);
+
+static async Task ProcessRepositoriesAsync(HttpClient client)
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    // var json = await client.GetStringAsync(
+    //      "https://api.github.com/orgs/dotnet/repos");
+    // var json = await client.GetStringAsync(
+    //      "https://localhost:7191/Student");
+    
+    var json = await client.GetStringAsync(
+         "https://firestore.googleapis.com/v1/projects/example-83225/databases/(default)/documents/Student");
+     Console.Write(json);
 }
 
-// app.UseHttpsRedirection();
+*/
 
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
