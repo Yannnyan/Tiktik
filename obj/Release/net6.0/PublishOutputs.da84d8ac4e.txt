@@ -1,0 +1,11 @@
+C:\Users\Yan\Desktop\Tiktik\TiktikHttpServer\publish\TiktikHttpServer.exe
+C:\Users\Yan\Desktop\Tiktik\TiktikHttpServer\publish\appsettings.Development.json
+C:\Users\Yan\Desktop\Tiktik\TiktikHttpServer\publish\appsettings.json
+C:\Users\Yan\Desktop\Tiktik\TiktikHttpServer\publish\TiktikHttpServer.dll
+C:\Users\Yan\Desktop\Tiktik\TiktikHttpServer\publish\TiktikHttpServer.deps.json
+C:\Users\Yan\Desktop\Tiktik\TiktikHttpServer\publish\TiktikHttpServer.runtimeconfig.json
+C:\Users\Yan\Desktop\Tiktik\TiktikHttpServer\publish\TiktikHttpServer.pdb
+C:\Users\Yan\Desktop\Tiktik\TiktikHttpServer\publish\Microsoft.OpenApi.dll
+C:\Users\Yan\Desktop\Tiktik\TiktikHttpServer\publish\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\Yan\Desktop\Tiktik\TiktikHttpServer\publish\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\Yan\Desktop\Tiktik\TiktikHttpServer\publish\Swashbuckle.AspNetCore.SwaggerUI.dll

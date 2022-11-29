@@ -31,6 +31,15 @@ public class StudentController : ControllerBase
         StudentService.Add(student);
         return CreatedAtAction("Created new student, ", new {student.Id}, student);
     }
+    [HttpPost("Register")]
+    public ActionResult Register(Student student)
+    {
+        if(student.Email is null || student.Name is null || student.Password is null||
+                                            student.Phone is null)
+            return BadRequest();
+        StudentService.Add(student);
+        return NoContent();
+    }
     // PUT action
     [HttpPut("{id}")]
     public ActionResult Put(Student student, int id)
