@@ -8,6 +8,8 @@ public class Student
     public String? Name{get; set;}
     public String? Phone{get; set;}
     
+    public String? Email{get; set;}
+    
     public Student(string phone, string name, string pass, string email, int id){
         this.Email = email;
         this.Id = id;
