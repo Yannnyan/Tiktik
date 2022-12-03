@@ -13,17 +13,13 @@ public class MessageController : ControllerBase
     {
     }
 
-    // [HttpPost]
-    // public ActionResult PostRegisterStudent(Student student)
-    // {
-    //     StudentService.Add(student);
-    //     return CreatedAtAction("Created obj Student, ", new {student.Id}, student);
-    // }
     [HttpGet]
     public ActionResult<List<Object>> GetAll() => LogService.loggedUsers.Cast<Object>().ToList();
 
-    [HttpPost]
-    public ActionResult<Response> Post(User user)
+
+    // log user in
+    [HttpPost("Login")]
+    public ActionResult<Response> Login(User user)
     {
         Console.WriteLine("Email: " + user.Email);
         Console.WriteLine("Password: " + user.Password);
@@ -51,15 +47,17 @@ public class MessageController : ControllerBase
         {
             return NotFound();
         }
-        return NoContent();
-
     }
-    // [HttpPost]
-    // public ActionResult PostLogin(Teacher teacher)
-    // {
-    //     LogService.LogIn(teacher);
-    //     return CreatedAtAction("Created new object, ", new{teacher.Id}, teacher);
-    // }
+    [HttpPost("Disconnect")]
+    public ActionResult<Response> Disconnect(User user)
+    {
+        bool isteacher = UserService.isTeacher(user);
+        if(isteacher)
+            LogService.Disconnect(TeacherService.Get(user.Email));
+        else
+            LogService.Disconnect(StudentService.Get(user.Email));
+        return NoContent();
+    }
 }
 
 

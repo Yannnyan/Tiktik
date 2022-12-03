@@ -1,38 +1,8 @@
-using System.Collections;
-using Google.Cloud.Firestore;
 
+using Google.Cloud.Firestore;
+using System.Collections;
 using TiktikHttpServer.Models;
 using TiktikHttpServer.Database;
-
-
-
-
-// var builder = WebApplication.CreateBuilder(args);
-
-// // Add services to the container.
-
-// builder.Services.AddControllers();
-// // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-// builder.Services.AddEndpointsApiExplorer();
-// builder.Services.AddSwaggerGen();
-
-// var app = builder.Build();
-
-// // Configure the HTTP request pipeline.
-// if (app.Environment.IsDevelopment())
-// {
-//     app.UseSwagger();
-//     app.UseSwaggerUI();
-// }
-
-// // app.UseHttpsRedirection();
-
-// app.UseAuthorization();
-
-// app.MapControllers();
-
-// app.Run();
-
 
 
 /*
@@ -60,7 +30,6 @@ static async Task ProcessRepositoriesAsync(HttpClient client)
 
 */
 
-
 CRUD DB = new CRUD();
 
 for(int i = 1; i<10; i++){
@@ -75,7 +44,7 @@ Timestamp date = new Timestamp();
 int counter = 1;
 for(int i = 1; i<10; i++){
     await DB.add_new_lesson(i,counter,i,date, "the lesson will start in petah tikva, please come with a mask");
-    if(i%3==0){
+    if(i % 3 == 0){
         counter++;
     }
 }
@@ -100,18 +69,3 @@ Console.WriteLine(l.TeacherId);
 
 ArrayList a = await DB.get_my_lessons_as_theacher(1);
 Console.WriteLine("the teacher num of lessons is: {0}", a.Count);
-
-//await DB.add_new_student("0509843567", "name2", "1234", "gmail@gmail.com", -1);
-
-//await DB.change_s_name_byid("name1", 2);
-
-//int result = await DB.free_id("Student");
-
-//Console.WriteLine(result);
-
-//await DB.change_collection_value("Student", "email", "newemail@gmail.com", 1);
-/*
-await DB.DeleteCollection("Student", 11);
-await DB.DeleteCollection("Lessons", 11);
-await DB.DeleteCollection("Teacher", 11);
-*/

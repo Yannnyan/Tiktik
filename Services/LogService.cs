@@ -21,9 +21,9 @@ public class LogService
         }
         loggedUsers.Add(obj);
     }
-    public static void Disconnect(Object obj)
+    public static void Disconnect(Object? obj)
     {
-        if(loggedUsers.IndexOf(obj) == -1)
+        if(obj is null || loggedUsers.IndexOf(obj) == -1)
             return;
         loggedUsers.Remove(obj);
     }
