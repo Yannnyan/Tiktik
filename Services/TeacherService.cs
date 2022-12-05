@@ -6,15 +6,36 @@ namespace TiktikHttpServer.Services;
 public class TeacherService
 {
     static List<Teacher> Teachers {get;}
+    static Dictionary<int, List<int>> TeacherToStudents;
     static int nextId = 3;
     static TeacherService()
     {
         Teachers = new List<Teacher>
         {
-            new Teacher {Id = 1, Name = "Moshe cohen", Email = "mosheCohen@gmail.com", Password = "123456", Phone = "0001234567"}
-            , new Teacher {Id = 2, Name = "Yossi zaguri", Email = "YossiZaguri@gmail.com", Password = "321654", Phone = "1231231234"}
+            new Teacher {Id = 1, Name = "Haim levi", Email = "haimLevi@gmail.com", Password = "123456", Phone = "0001234567"}
+            , new Teacher {Id = 2, Name = "Yoni ben el", Email = "yoniBelEl@gmail.com", Password = "321654", Phone = "1231231234"}
 
         };
+        TeacherToStudents = new Dictionary<int, List<int>>();
+        List<int> l1 = new List<int>();
+        l1.Add(2);
+        List<int> l2 = new List<int>();
+        l2.Add(1);
+        TeacherToStudents.Add(1, l1);
+        TeacherToStudents.Add(2, l2);
+
+    }
+    public static List<int> GetAllStudents(int TeacherId)
+    {
+        return TeacherToStudents[TeacherId];
+    }
+    public static void AddStudentToTeacher(int StudentId, int TeacherId)
+    {
+        TeacherToStudents[TeacherId].Add(StudentId);
+    }
+    public static void DeleteStudentFromTeacher(int StudentId, int TeacherId)
+    {
+        TeacherToStudents[TeacherId].Remove(StudentId);
     }
 
     public static List<Teacher> GetAll() => Teachers;

@@ -23,7 +23,34 @@ public class TeacherController : ControllerBase
 
         return Teacher;
     }
-
+    [HttpGet("Students/{TeacherId}")]
+    public ActionResult<List<Student>> GetStudentsByTeacher(int TeacherId)
+    {
+        if(TeacherService.Get(TeacherId) is null)
+            return NotFound("Teacher not found");
+        List<int> students_ids= TeacherService.GetAllStudents(TeacherId);
+        List<Student> students = new List<Student>();
+        foreach(int stId in students_ids)
+        {
+            Student? std = StudentService.Get(stId); 
+            if(std is null)
+                continue;
+            students.Add(std);
+        }
+        return students;
+    }
+    [HttpGet("TeachersByName/{Name}")]
+    public ActionResult<List<Teacher>> GetTeachersByName(string name)
+    {
+        List<Teacher> allTeachers = TeacherService.GetAll();
+        List<Teacher> teachersByName = new List<Teacher>();
+        foreach(Teacher teach in allTeachers)
+        {
+            if(teach.Name.StartsWith(name))
+                teachersByName.Add(teach);
+        }
+        return teachersByName;
+    }
     // POST action
     [HttpPost]
     public ActionResult Post(Teacher Teacher)
