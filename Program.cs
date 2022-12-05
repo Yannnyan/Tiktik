@@ -33,11 +33,11 @@ static async Task ProcessRepositoriesAsync(HttpClient client)
 CRUD DB = new CRUD();
 
 for(int i = 1; i<10; i++){
-    await DB.add_new_student("050984356"+i.ToString(), "name" + i.ToString(), "1234", "gmail@gmail.com", i);
+    await DB.add_new_student("050984356"+i.ToString(), "name" + i.ToString(), "1234", "sssss", -1);
 }
 
 for(int i = 1; i<10; i++){
-    await DB.add_new_theacher("054984356"+i.ToString(), "name" + i.ToString(), "1234", "gmail@gmail.com", i);
+    await DB.add_new_theacher("054984356"+i.ToString(), "name" + i.ToString(), "1234", "sssss", -1);
 }
 Timestamp date = new Timestamp();
 
