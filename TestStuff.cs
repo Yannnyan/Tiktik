@@ -6,24 +6,24 @@ using TiktikHttpServer.Database;
 
 public class testStuff
 {
-    public async static void test()
+    public async static Task test()
     {
         
         
         CRUD DB = new CRUD();
 
         for(int i = 1; i<10; i++){
-            await DB.add_new_student("050984356"+i.ToString(), "name" + i.ToString(), "1234", "gmail@gmail.com", i);
+            await DB.add_student(""+i.ToString(), "name" + i.ToString(), "1234", "gmail@gmail.com", -1);
         }
 
-        for(int i = 1; i<10; i++){
-            await DB.add_new_theacher("054984356"+i.ToString(), "name" + i.ToString(), "1234", "gmail@gmail.com", i);
-        }
+        // for(int i = 1; i<10; i++){
+        //     await DB.add_theacher("054984356"+i.ToString(), "name" + i.ToString(), "1234", "gmail@gmail.com", -1);
+        // }
         Timestamp date = new Timestamp();
 
         int counter = 1;
         for(int i = 1; i<10; i++){
-            await DB.add_new_lesson(i,counter,i,date, "the lesson will start in petah tikva, please come with a mask");
+            await DB.add_lesson(i,counter,i,date, "the lesson will start in petah tikva, please come with a mask");
             if(i % 3 == 0){
                 counter++;
             }
@@ -50,8 +50,8 @@ public class testStuff
         ArrayList a = await DB.get_my_lessons_as_theacher(1);
         Console.WriteLine("the teacher num of lessons is: {0}", a.Count);
 
-
-
+        ArrayList b = await DB.GetAll(new Student());
+        Console.WriteLine("the number of Students is {0}" ,b.Count);
     }
 
 }

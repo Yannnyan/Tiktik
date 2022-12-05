@@ -27,7 +27,7 @@ public interface crud_inter{
     //creates and adds Student object to the Student Document. on seccess -> true, on failure -> false
     //If id is initialized to -1 the Student will be given a free id value
     //id should be -1 or id > 0
-    public Task<bool> add_new_student(string phone, string name, string pass, string email, int id);
+    public Task<bool> add_student(string phone, string name, string pass, string email, int id);
 
     //delete a student by identifier string id
     //return true on seccess and false on fail or the document doesent exist
@@ -46,12 +46,12 @@ public interface crud_inter{
     //creates and adds Teacher object to the Teacher Document. on seccess -> true, on failure -> false
     //If id is initialized to -1 the Teacher will be given a free id value
     //id should be -1 or id > 0
-    public Task<bool> add_new_theacher(string phone, string name, string pass, string email, int id);
+    public Task<bool> add_theacher(string phone, string name, string pass, string email, int id);
 
     //creates and adds Teacher object to the Teacher Document. on seccess -> true, on failure -> false
     //If id is initialized to -1 the Teacher will be given a free id value
     //t.id should be -1 or t.id > 0
-    public Task<bool> add_new_theacher(Teacher t);
+    public Task<bool> add_theacher(Teacher t);
 
     public Task<bool> change_t_phone_byid(string phone, int id);
 
@@ -66,9 +66,9 @@ public interface crud_inter{
 
     //adds new lesson with id = l.id
     //if id = -1 lesson will get smallest free id
-    public Task<bool> add_new_lesson(Lesson l);
+    public Task<bool> add_lesson(Lesson l);
 
-    public Task<bool> add_new_lesson(int id, int TheacherId, int StudentId, Timestamp date, string comment);
+    public Task<bool> add_lesson(int id, int TheacherId, int StudentId, Timestamp date, string comment);
 
     public Task<bool> change_comment_byid(int id, String comment);
 
@@ -81,12 +81,6 @@ public interface crud_inter{
     public Task<ArrayList> get_my_lessons_as_student(int Lid);
        
     //-------------------------------extra or general
-
-    public Task<bool> id_exist_s(int studentId);
-
-    public Task<bool> id_exist_t(int teacherId);
-
-    public Task<bool> id_exist_l(int lessonId);
 
     //this can also be used but be aware, wrong collection_name could lead to exeption
     public Task<bool> id_exist(int id, string collection_name);
@@ -105,13 +99,19 @@ public interface crud_inter{
     public Task<object> get_value_Document(string collection_name, int Did, string key);
     
 
-
-
-    
-
-    
-
-
+    // if T is a type of student, then add to the students table
+    public Task<bool> add(Object T);
+    // example: 
+    // if T is instanceof Student, then
+    // return all students, make it generic for Teacher and Lesson
+    // to remove redundancy of code
+    public Task<ArrayList> GetAll(Object T);
+    // update the object with the id-- id,
+    // to be T
+    // if T is student, update the student with that id to be T
+    public void Update(Object T, int id);
+    // delete the object T from the database
+    public void Delete(Object T);
 
 
 

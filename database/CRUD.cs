@@ -15,6 +15,44 @@ public class CRUD : crud_inter{
 
     }
 
+    public async Task<bool> add(Object T){
+
+        if(T is Student){
+            return await add_student((Student)T);
+        }else if(T is Teacher){
+            return await add_theacher((Teacher)T);
+        }else{
+            return await  add_lesson((Lesson)T);
+        }
+
+    }
+
+    public async Task<ArrayList> GetAll(Object T){ 
+        string collection_name;
+
+        if(T is Student){
+            collection_name = "Student";
+        }else if(T is Teacher){
+            collection_name = "Teacher";
+        }else{
+            collection_name = "Lessons";
+        }
+
+
+        CollectionReference lessonsref = db.Collection(collection_name);
+        
+
+        QuerySnapshot ds = await lessonsref.GetSnapshotAsync();
+
+        ArrayList arry = new ArrayList();
+
+        foreach (DocumentSnapshot documentSnapshot in ds.Documents){
+            arry.Add(crud_fun.from_dictionary_to_Object(documentSnapshot.ToDictionary(), collection_name));
+        }
+
+        return arry;
+    }
+
     //checking if "collection_name" id already exists. returns true if exists else, return false
     public async Task<bool> id_exist(int id, string collection_name){
 
@@ -35,48 +73,6 @@ public class CRUD : crud_inter{
             
         
     }
-
-    //checking if Teacher exists returns true if exists else, return false
-    public async Task<bool> id_exist_t(int id){
-        if(id <= 0){
-            Console.WriteLine("incorrect id input (negative)");
-            return false;
-        }
-        CollectionReference studentsRef = db.Collection("Teacher");
-        Query query = studentsRef.WhereEqualTo("id", id);
-        QuerySnapshot querySnapshot = await query.GetSnapshotAsync();
-        if(querySnapshot.Count > 0)
-            return true;
-        return false;
-    }
-
-    //checking if Student exists returns true if exists else, return false
-     public async Task<bool> id_exist_s(int id){
-        if(id <= 0){
-            Console.WriteLine("incorrect id input (negative)");
-            return false;
-        }
-        CollectionReference studentsRef = db.Collection("Student");
-        Query query = studentsRef.WhereEqualTo("id", id);
-        QuerySnapshot querySnapshot = await query.GetSnapshotAsync();
-        if(querySnapshot.Count > 0)
-            return true;
-        return false;
-    }
-
-    //checking if Lessons exists returns true if exists else, return false
-     public async Task<bool> id_exist_l(int lessonId){
-        if(lessonId <= 0){
-            Console.WriteLine("incorrect id input (negative)");
-            return false;
-        }
-        CollectionReference studentsRef = db.Collection("Lessons");
-        Query query = studentsRef.WhereEqualTo("id", lessonId);
-        QuerySnapshot querySnapshot = await query.GetSnapshotAsync();
-        if(querySnapshot.Count > 0)
-            return true;
-        return false;
-     }
 
     //deleting all documents in the collection "collection_name" with limmit of "batchSize"
     public async Task DeleteCollection(string collection_name, int batchSize)
@@ -99,15 +95,14 @@ public class CRUD : crud_inter{
 
     //returns the next smallest free id from collection "collection_name"
     public async Task<int> free_id(string collection_name){
-        int counter = 1;
+        
         CollectionReference cf = db.Collection(collection_name);
         QuerySnapshot allsnaps = await cf.GetSnapshotAsync();
+        int[] arr = new int[allsnaps.Count];
+        int counter = 0;
         foreach (DocumentSnapshot documentSnapshot in allsnaps.Documents)
         {
-            if(Int64.Parse(documentSnapshot.Id) == counter)
-                counter++;
-            else
-                break;
+            arr[counter] = documentSnapshot.Id
             
         }
         return counter;
@@ -245,11 +240,11 @@ public class CRUD : crud_inter{
 
     //creates and adds student object to the Student Document. on seccess -> true, on failure -> false
     //If id is initialized to -1 the student will be given a free id value
-    public async Task<bool> add_new_student(string phone, string name, string pass, string email, int id){
+    public async Task<bool> add_student(string phone, string name, string pass, string email, int id){
         
         if(id == -1){
-            int new_id = free_id("Student").Result;
-            id = new_id;
+            id = free_id("Student").Result;
+            Console.WriteLine("THE ID IS: {0}", id);
         }else if(id <= 0){
             Console.WriteLine("incorrect id = {0} input (non-positive)", id);
             return false;
@@ -273,7 +268,7 @@ public class CRUD : crud_inter{
 
 
         WriteResult writeResult = await docRef.SetAsync(newuser);
-        Console.WriteLine(writeResult.UpdateTime);
+        //Console.WriteLine(writeResult.UpdateTime);
         Console.WriteLine("Added data to the Student collection.");
 
         return true;
@@ -366,7 +361,7 @@ public class CRUD : crud_inter{
 
     //creates and adds Teacher object to the Teacher Document. on seccess -> true, on failure -> false
     //If id is initialized to -1 the Teacher will be given a free id value
-    public async Task<bool> add_new_theacher(string phone, string name, string pass, string email, int id){
+    public async Task<bool> add_theacher(string phone, string name, string pass, string email, int id){
 
         if(id == -1){
             int new_id = free_id("Teacher").Result;
@@ -403,7 +398,7 @@ public class CRUD : crud_inter{
 
     //creates and adds Teacher object to the Teacher Document. on seccess -> true, on failure -> false
     //If id is initialized to -1 the Teacher will be given a free id value
-    public async Task<bool> add_new_theacher(Teacher t){
+    public async Task<bool> add_theacher(Teacher t){
 
         if(t.Id == -1){
             int new_id = free_id("Teacher").Result;
@@ -464,7 +459,7 @@ public class CRUD : crud_inter{
     }
 
     public async Task<bool> change_t_phone_byid(string phone, int id){
-        if(!id_exist_t(id).Result){
+        if(!id_exist(id, "Teacher").Result){
             Console.WriteLine("teacher doesnt exist");
             return false;
         }else{
@@ -476,7 +471,7 @@ public class CRUD : crud_inter{
         
     }
     public async Task<bool> change_t_name_byid(string name, int id){
-        if(!id_exist_t(id).Result){
+        if(!id_exist(id, "Teacher").Result){
             Console.WriteLine("teacher doesnt exist");
             return false;
         }else{
@@ -488,7 +483,7 @@ public class CRUD : crud_inter{
         
     }
     public async Task<bool> change_t_pass_byid(string pass, int id){
-        if(!id_exist_t(id).Result){
+        if(!id_exist(id, "Teacher").Result){
             Console.WriteLine("teacher doesnt exist");
             return false;
         }else{
@@ -500,7 +495,7 @@ public class CRUD : crud_inter{
         
     }
     public async Task<bool> change_t_email_byid(string email, int id){
-        if(!id_exist_t(id).Result){
+        if(!id_exist(id, "Teacher").Result){
             Console.WriteLine("teacher doesnt exist");
             return false;
         }else{
@@ -516,7 +511,7 @@ public class CRUD : crud_inter{
 
     //---------------------------------------lessons
 
-    public async Task<bool> add_new_lesson(Lesson l)
+    public async Task<bool> add_lesson(Lesson l)
     {
         if(l.Id == -1){
             int new_id = free_id("Lesson").Result;
@@ -550,7 +545,7 @@ public class CRUD : crud_inter{
 
     }
 
-    public async Task<bool> add_new_lesson(int id, int TheacherId, int StudentId, Timestamp date, string comment){
+    public async Task<bool> add_lesson(int id, int TheacherId, int StudentId, Timestamp date, string comment){
         if(id == -1){
             int new_id = free_id("Lesson").Result;
             id = new_id;
@@ -673,6 +668,14 @@ public class CRUD : crud_inter{
         return arry;
     }
 
-    
+    void crud_inter.Update(object T, int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    void crud_inter.Delete(object T)
+    {
+        throw new NotImplementedException();
+    }
 }
 

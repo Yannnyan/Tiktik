@@ -6,6 +6,16 @@ using TiktikHttpServer.Models;
 
 public class crud_fun{
 
+
+    public static Object from_dictionary_to_Object(Dictionary<string, object> dic, string collection_name){
+        if(collection_name.Equals("Student"))
+            return from_dictionary_to_student(dic);
+        if(collection_name.Equals("Teacher"))
+            return from_dictionary_to_theacher(dic); 
+        return from_dictionary_to_lesson(dic);
+    }
+
+
     public static Student from_dictionary_to_student(Dictionary<string, object> dic){
         Student s = new Student();
 
