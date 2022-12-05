@@ -23,6 +23,20 @@ public class StudentController : ControllerBase
 
         return student;
     }
+    [HttpGet("Teacher/{StudentId}")]
+    public ActionResult<Teacher> GetTeacher(int StudentId)
+    {
+        if(StudentService.Get(StudentId) is null)
+            return NotFound();
+        int? teachId = StudentService.GetTeacherId(StudentId);
+        if(teachId is null)
+            return NotFound("No Teacher for this student");
+        Teacher? teach = TeacherService.Get((int)teachId);
+        if (teach is null)
+            return NotFound("Teach id is registered but not found in data");
+        return teach;
+
+    }
 
     // POST action
     [HttpPost]
@@ -39,6 +53,33 @@ public class StudentController : ControllerBase
             return BadRequest();
         StudentService.Add(student);
         return NoContent();
+    }
+    [HttpPost("AddTeacher/{StudentId}/{TeacherId}")]
+    public ActionResult AddTeacher(int StudentId, int TeacherId)
+    {
+        Student? std = StudentService.Get(StudentId);
+        Teacher? teach =  TeacherService.Get(TeacherId);
+        if(std is null || teach is null)
+            return BadRequest("Cannot get the Student's Id, or the Teacher Id's from the data");
+        StudentService.AddTeacherToStudent(StudentId, TeacherId);
+        TeacherService.AddStudentToTeacher(StudentId, TeacherId);
+        // TODO: Add Database integration here
+        return Ok();
+    }
+    [HttpDelete("DeleteTeacher/{StudentId}")]
+    public ActionResult DeleteTeacher(int StudentId)
+    {
+        Student? std = StudentService.Get(StudentId);
+        if(std is null)
+            return BadRequest("This student does not exist");
+        int? teachId = StudentService.GetTeacherId(StudentId);
+        if(teachId is null)
+            return BadRequest("this student does not have a teacher");
+        Teacher? teach = TeacherService.Get((int)teachId);
+        if(teach is null)
+            return NotFound("Teacher id is registered but not found.");
+        TeacherService.DeleteStudentFromTeacher(StudentId, (int)teachId);
+        return Ok();
     }
     // PUT action
     [HttpPut("{id}")]

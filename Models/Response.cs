@@ -13,16 +13,14 @@ public class Response_Teacher : Response
 {
     public List<Student>? students{get;set;}
     public List<Lesson>? lessons{get;set;}
-    public List<Lesson>? lesson_not_approved{get;set;}
     public Response_Teacher(Teacher teacher)
     {
         this.approved = true;
         this.isTeacher = true;
         this.lessons = null;
         this.students = null;
-        this.lesson_not_approved = null;
     }
-    
+
 }
 public class Response_Student : Response
 {

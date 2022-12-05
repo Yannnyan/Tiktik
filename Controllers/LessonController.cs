@@ -21,7 +21,6 @@ public class LessonController : ControllerBase
             if(TeacherService.Get(id) is null)
                 return NotFound();
             return LessonService.GetByTeacher(id);
-
         }
         else
         {
@@ -58,7 +57,7 @@ public class LessonController : ControllerBase
         if (LessonService.GetById(lessonId) is null)
             return NotFound();
         LessonService.Delete(lessonId);
-        return NoContent();
+        return Ok();
     }
 }
 

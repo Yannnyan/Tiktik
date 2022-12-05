@@ -5,6 +5,7 @@ namespace TiktikHttpServer.Services;
 public class StudentService
 {
     static List<Student> Students {get;}
+    static Dictionary<int, int?> StudentToTeacher{get;}
     static int nextId = 3;
     static StudentService()
     {
@@ -12,10 +13,20 @@ public class StudentService
         {
             new Student {Id = 1, Name = "Moshe cohen", Email = "mosheCohen@gmail.com", Password = "123456", Phone = "0001234567"}
             , new Student {Id = 2, Name = "Yossi zaguri", Email = "YossiZaguri@gmail.com", Password = "321654", Phone = "1231231234"}
-
         };
+        StudentToTeacher = new Dictionary<int, int?>();
+        StudentToTeacher.Add(1, 2);
+        StudentToTeacher.Add(2, 1);
     }
+    public static void AddTeacherToStudent(int StudentId, int TeacherId)
+    {
+        StudentToTeacher[StudentId] = TeacherId;
 
+    }
+    public static int? GetTeacherId(int StudentId)
+    {
+        return StudentToTeacher[StudentId];
+    }
     public static List<Student> GetAll() => Students;
 
     public static Student? Get(int id) => Students.FirstOrDefault(p => p.Id == id);
@@ -24,6 +35,8 @@ public class StudentService
     {
         student.Id = nextId++;
         Students.Add(student);
+        StudentToTeacher.Add(student.Id, null);
+        // TODO: Add Database integration here
     }
 
     public static void Delete(int id)
@@ -33,6 +46,8 @@ public class StudentService
             return;
 
         Students.Remove(student);
+        // TODO: Add Database integration here
+
     }
 
     public static void Update(Student student)
