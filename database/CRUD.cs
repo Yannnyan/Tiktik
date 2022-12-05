@@ -8,8 +8,8 @@ using TiktikHttpServer.Models;
 public class CRUD : crud_inter{
     FirestoreDb db;
     public CRUD(){
-        System.Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "C:/Users/Yan/Desktop/tiktikdb-bfa5d-70273e817eb9 (1).json");
-        // System.Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "C:/Users/ברוכסון/OneDrive/שולחן העבודה/tiktikdb-bfa5d-70273e817eb9 (1).json");
+        //System.Environment.SetEnvironmentVariable("C:/Users/ברוכסון/OneDrive/מסמכים/יהונתן/אוניברסיטה עבודות/הנדסת תוכנה/Tiktik/database\tiktikdb-bfa5d-70273e817eb9 (1).json");
+         System.Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "C:/Users/ברוכסון/OneDrive/שולחן העבודה/tiktikdb-bfa5d-70273e817eb9 (1).json");
         db = FirestoreDb.Create("tiktikdb-bfa5d");
         Console.WriteLine("Created Cloud Firestore client with project ID: tiktikdb-bfa5d");
 
