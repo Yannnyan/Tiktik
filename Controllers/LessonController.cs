@@ -35,8 +35,9 @@ public class LessonController : ControllerBase
     [HttpPost]
     public ActionResult Post(Lesson lesson)
     {
+        Console.WriteLine(lesson.ToString());
         LessonService.Add(lesson);
-        return CreatedAtAction("Created new Lesson ", new {lesson.Id}, lesson);
+        return NoContent();
     }
 
     // put

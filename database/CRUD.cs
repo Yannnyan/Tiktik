@@ -550,7 +550,7 @@ public class CRUD : crud_inter{
 
     }
 
-    public async Task<bool> add_new_lesson(int id, int TheacherId, int StudentId, Timestamp date, string comment){
+    public async Task<bool> add_new_lesson(int id, int TheacherId, int StudentId, DateTime date, string comment){
         if(id == -1){
             int new_id = free_id("Lesson").Result;
             id = new_id;
@@ -596,7 +596,7 @@ public class CRUD : crud_inter{
         }
     }
 
-    public async Task<bool> change_date_byid(int Lid, Timestamp newDate)
+    public async Task<bool> change_date_byid(int Lid, DateTime newDate)
     {
         if(!id_exist(Lid, "Lessons").Result){
             Console.WriteLine("lesson doesnt exist");
@@ -622,7 +622,7 @@ public class CRUD : crud_inter{
             
             //lessonDic.TryGetValue("comment", out comment);
             lesson.Comment = (string) lessonDic["Comment"];
-            lesson.Date = (Timestamp) lessonDic["Date"];
+            lesson.Date = (DateTime) lessonDic["Date"];
             lesson.Id = (int)(long) lessonDic["id"];
             lesson.StudentId = (int)(long) lessonDic["StudentId"];
             lesson.TeacherId = (int)(long) lessonDic["TeacherId"];

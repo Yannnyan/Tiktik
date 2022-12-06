@@ -34,7 +34,7 @@ public class crud_fun{
         Lesson lesson = new Lesson();
 
         lesson.Comment = (string) dic["Comment"];
-        lesson.Date = (Timestamp) dic["Date"];
+        lesson.Date = (DateTime) dic["Date"];
         lesson.Id = (int)(long) dic["id"];
         lesson.StudentId = (int)(long) dic["StudentId"];
         lesson.TeacherId = (int)(long) dic["TeacherId"];

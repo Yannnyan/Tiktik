@@ -68,11 +68,11 @@ public interface crud_inter{
     //if id = -1 lesson will get smallest free id
     public Task<bool> add_new_lesson(Lesson l);
 
-    public Task<bool> add_new_lesson(int id, int TheacherId, int StudentId, Timestamp date, string comment);
+    public Task<bool> add_new_lesson(int id, int TheacherId, int StudentId, DateTime date, string comment);
 
     public Task<bool> change_comment_byid(int id, String comment);
 
-    public Task<bool> change_date_byid(int id, Timestamp newDate);
+    public Task<bool> change_date_byid(int id, DateTime newDate);
 
     public Task<Lesson> get_lesson_byid(int LessonId);
 

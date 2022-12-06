@@ -19,7 +19,7 @@ public class testStuff
         for(int i = 1; i<10; i++){
             await DB.add_new_theacher("054984356"+i.ToString(), "name" + i.ToString(), "1234", "gmail@gmail.com", i);
         }
-        Timestamp date = new Timestamp();
+        DateTime date = new DateTime();
 
         int counter = 1;
         for(int i = 1; i<10; i++){
