@@ -6,10 +6,11 @@ namespace TiktikHttpServer.Services;
 public class LessonService
 {
     public static List<Lesson> Lessons {get;}
-    static int nextId = 3;
+    static int nextId;
     static LessonService()
     {
         Lessons = CrudService.crud.GetAll(new Lesson()).Result.Cast<Lesson>().ToList();
+        nextId = Lessons.Max(std => std.Id) + 1;
         // Lessons = new List<Lesson>
         // {
         //     new Lesson {Id = 1, TeacherId = 1, StudentId = 1, Comment = "Meet me at new zealand."},

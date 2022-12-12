@@ -7,13 +7,12 @@ public class StudentService
 {
     static List<Student> Students {get;}
     static Dictionary<int, int?> StudentToTeacher{get;}
-    static int nextId = 3;
+    static int nextId;
 
     static StudentService()
     {
         Students = CrudService.crud.GetAll(new Student()).Result.Cast<Student>().ToList();
-        Add(new Student("0001234567", "Moshe cohen", "123456", "mosheCohen@gmail.com", 10));
-
+        nextId = Students.Max(std => std.Id) + 1;
         // Students = new List<Student>
         // {
         //     new Student {Id = 1, Name = "Moshe cohen", Email = "mosheCohen@gmail.com", Password = "123456", Phone = "0001234567"}
