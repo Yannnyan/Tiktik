@@ -621,7 +621,7 @@ public class CRUD : crud_inter{
 
     }
 
-    public async Task<bool> add_lesson(int id, int TheacherId, int StudentId, Timestamp date, string comment){
+    public async Task<bool> add_lesson(int id, int TheacherId, int StudentId, DateTime date, string comment){
         if(id == -1){
             int new_id = free_id("Lesson").Result;
             id = new_id;

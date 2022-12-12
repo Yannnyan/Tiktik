@@ -93,11 +93,7 @@
         }
       },
       {
-<<<<<<< HEAD
         "HashCode": -1051451198,
-=======
-        "HashCode": -1235366111,
->>>>>>> eae618aa1c5d48e5288fee12a8828ca43980d530
         "Kind": "Components.Component",
         "Name": "Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView",
         "AssemblyName": "Microsoft.AspNetCore.Components.Authorization",

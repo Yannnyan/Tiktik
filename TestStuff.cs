@@ -15,7 +15,7 @@ public class testStuff
 
         Teacher t = new Teacher("05448975612", "theacher", "badpass123", "teacher@gmail.com", -1);
 
-        Timestamp date = new Timestamp();
+        DateTime date = new DateTime();
         int counter = 1;
         Lesson l = new Lesson(-1, counter, 1, date, "this lesson comment");
 
