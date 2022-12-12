@@ -1,20 +1,47 @@
 namespace TiktikHttpServer.Models;
 using Google.Cloud.Firestore;
 
+
 [FirestoreData]
 public class Lesson
 {
     [FirestoreProperty("id")]
     public int Id{get;set;}
-    [FirestoreProperty]
+    [FirestoreProperty("teacherid")]
     public int TeacherId{get;set;}
-    [FirestoreProperty]
+    [FirestoreProperty("studentid")]
     public int StudentId{get;set;}
-    [FirestoreProperty]
-    public DateTime Date{get;set;}
-    [FirestoreProperty]
-    public String? Comment{get;set;}
+    private DateTime date;
+    [FirestoreProperty("date")]
+    public DateTime Date
+    {
+        get{
+           return date; 
+        }
+        set
+        {
+            date = getDateFromVal(value);
+        }
+    }
+    [FirestoreProperty("comment")]
+    public String? Comment
+    {get;set;}
 
+    private DateTime getDateFromVal(object val)
+    {
+        if(val is string)
+        {
+            return DateTime.Parse((string)val);
+        }
+        else if(val is DateTime)
+        {
+            return (DateTime)val;
+        }
+        else{ // default
+            return DateTime.UnixEpoch;
+        }
+
+    }
     public Lesson(int id, int TheacherId, int StudentId, DateTime Date, string Comment){
         this.Id = id;
         this.TeacherId = TheacherId;

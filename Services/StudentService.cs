@@ -19,8 +19,15 @@ public class StudentService
         //     , new Student {Id = 2, Name = "Yossi zaguri", Email = "YossiZaguri@gmail.com", Password = "321654", Phone = "1231231234"}
         // };
         StudentToTeacher = new Dictionary<int, int?>();
-        StudentToTeacher.Add(1, 2);
-        StudentToTeacher.Add(2, 1);
+        update_StudentToTeacher();
+    }
+    private static void update_StudentToTeacher()
+    {
+        List<LearnsWith> lst = CrudService.crud.GetAll(new LearnsWith()).Result.Cast<LearnsWith>().ToList();
+        foreach(LearnsWith map in lst)
+        {
+            StudentToTeacher.Add(map.studentid, map.teacherid);
+        }
     }
     public static void AddTeacherToStudent(int StudentId, int TeacherId)
     {
@@ -50,7 +57,7 @@ public class StudentService
             return;
 
         Students.Remove(student);
-        // TODO: Add Database integration here
+        CrudService.crud.Delete(student);
 
     }
 

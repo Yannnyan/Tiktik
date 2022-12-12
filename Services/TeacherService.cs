@@ -20,13 +20,21 @@ public class TeacherService
 
         // };
         TeacherToStudents = new Dictionary<int, List<int>>();
-        List<int> l1 = new List<int>();
-        l1.Add(2);
-        List<int> l2 = new List<int>();
-        l2.Add(1);
-        TeacherToStudents.Add(1, l1);
-        TeacherToStudents.Add(2, l2);
-
+        updateTeacherToStudents();
+    }
+    private static void updateTeacherToStudents()
+    {
+       
+        foreach(Teacher teacher in Teachers)
+        {
+            TeacherToStudents.Add(teacher.Id, new List<int>());
+            List<LearnsWith> lst = CrudService.crud.getStudentsByTeacher(teacher.Id).Result.Cast<LearnsWith>().ToList();
+            lst.ForEach(v => 
+            {
+                if(v.teacherid == teacher.Id) 
+                    TeacherToStudents[teacher.Id].Add(v.studentid);
+            });
+        }
     }
     public static List<int> GetAllStudents(int TeacherId)
     {
@@ -59,6 +67,7 @@ public class TeacherService
             return;
 
         Teachers.Remove(Teacher);
+        CrudService.crud.Delete(Teacher);
     }
 
     public static void Update(Teacher Teacher)

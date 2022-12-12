@@ -32,7 +32,7 @@ public class testStuff
         //     }
         // }
     
-        Console.WriteLine("free space in: Student: {0}, Lessons: {1}, Teacher: {2}", await DB.free_id(DB.Students_collection), await DB.free_id(DB.Lessons_collection), await DB.free_id(DB.Teachers_collection));
+        Console.WriteLine("free space in: Student: {0}, Lessons: {1}, Teacher: {2}", await DB.free_id(CRUD.Students_collection), await DB.free_id(CRUD.Lessons_collection), await DB.free_id(CRUD.Teachers_collection));
 
         Lesson lesson = await DB.get_lesson_byid(4);
         Console.WriteLine("lesson with id = 4: ");
@@ -54,7 +54,7 @@ public class testStuff
         ArrayList arry = await DB.GetAll(new Student());
         Console.WriteLine("the number of Students in student collection is {0}" ,arry.Count);
 
-       int result = await DB.free_id(DB.Teachers_collection);
+       int result = await DB.free_id(CRUD.Teachers_collection);
        Console.WriteLine("free id in Student collection {0}", result);
 
     // await DB.DeleteCollection(DB.Lessons_collection,50);

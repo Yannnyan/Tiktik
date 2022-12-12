@@ -59,6 +59,7 @@ public class LessonService
         if (lesson is null)
             return;
         Lessons.Remove(lesson);
+        CrudService.crud.Delete(lesson);
     }
 
     public static void Update(Lesson lesson)

@@ -109,9 +109,11 @@ public interface crud_inter{
     // update the object with the id-- id,
     // to be T
     // if T is student, update the student with that id to be T
-    public void Update(Object T, int id);
+    public void Update(object T, int id);
     // delete the object T from the database
    public Task<bool> Delete(Object T);
+    public Task<LearnsWith> getLearnsWith(int StudentId);
+    public Task<ArrayList> getStudentsByTeacher(int teacherId);
 
 
 

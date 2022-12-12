@@ -8,9 +8,10 @@ using TiktikHttpServer.Models;
 
 public class CRUD : crud_inter{
     FirestoreDb db;
-    public string Students_collection = "Student";
-    public string Teachers_collection = "Teacher";
-    public string Lessons_collection = "Lessons";
+    public static string Students_collection = "Student";
+public static string Teachers_collection = "Teacher";
+public static string Lessons_collection = "Lessons";
+public static string LearnsWith_collection = "LearnsWith";
 
     public CRUD(){
         //System.Environment.SetEnvironmentVariable("C:/Users/ברוכסון/OneDrive/מסמכים/יהונתן/אוניברסיטה עבודות/הנדסת תוכנה/Tiktik/database\tiktikdb-bfa5d-70273e817eb9 (1).json");
@@ -26,10 +27,14 @@ public class CRUD : crud_inter{
             return await add_student((Student)T);
         }else if(T is Teacher){
             return await add_theacher((Teacher)T);
-        }else{
+        }else if(T is Lesson){
             return await  add_lesson((Lesson)T);
         }
-
+        else if(T is LearnsWith)
+        {
+            return await add_LearnsWith((LearnsWith) T);
+        }
+        return false;
     }
 
     public async Task<ArrayList> GetAll(Object T){ 
@@ -39,8 +44,12 @@ public class CRUD : crud_inter{
             collection_name = Students_collection;
         }else if(T is Teacher){
             collection_name = Teachers_collection;
-        }else{
+        }else if(T is Lesson){
             collection_name = Lessons_collection;
+        }
+        else
+        {
+            collection_name = LearnsWith_collection;
         }
 
 
@@ -50,12 +59,24 @@ public class CRUD : crud_inter{
         QuerySnapshot ds = await lessonsref.GetSnapshotAsync();
 
         ArrayList arry = new ArrayList();
-
-        foreach (DocumentSnapshot documentSnapshot in ds.Documents){
-            arry.Add(crud_fun.from_dictionary_to_Object(documentSnapshot.ToDictionary(), collection_name));
+        foreach(DocumentSnapshot doc in ds.Documents)
+        {
+            if(T is Student)
+                arry.Add(doc.ConvertTo<Student>());
+            else if(T is Teacher)
+                arry.Add(doc.ConvertTo<Teacher>());
+            else if(T is Lesson)
+                arry.Add(crud_fun.from_dictionary_to_Object(doc.ToDictionary(), collection_name));
+            else if(T is LearnsWith)
+                arry.Add(doc.ConvertTo<LearnsWith>());
         }
-
         return arry;
+
+        // foreach (DocumentSnapshot documentSnapshot in ds.Documents){
+        //     arry.Add(crud_fun.from_dictionary_to_Object(documentSnapshot.ToDictionary(), collection_name));
+        // }
+
+        // return arry;
     }
 
     //checking if "collection_name" id already exists. returns true if exists else, return false
@@ -151,58 +172,29 @@ public class CRUD : crud_inter{
     }
 
     public async Task<bool> Delete(Object T){
-        string collection_name;
-        Type myType;
+        string collection_name = "";
         int object_id = 0;
-
         if(T is Student){
             collection_name = Students_collection;
-            try{	
-            myType = typeof(Student);
             // Get the PropertyInfo object representing MyProperty.
-            PropertyInfo myIdProperties = myType.GetProperty("Id",typeof(int));
-            object_id =(int) myIdProperties.GetValue(T);
-            
-            Console.WriteLine("The value is {0}.", myIdProperties.GetValue(T));
-            }
-            catch(ArgumentNullException e)
-            {
-                Console.WriteLine("ArgumentNullException :"+e.Message);
-            }
+            object_id =((Student)T).Id;
             
         }else if(T is Teacher){
             collection_name = Teachers_collection;
-            try{	
-            myType = typeof(Teacher);
-            // Get the PropertyInfo object representing MyProperty.
-            PropertyInfo myIdProperties = myType.GetProperty("Id",typeof(int));
-            object_id =(int) myIdProperties.GetValue(T);
-            
-            Console.WriteLine("The value is {0}.", myIdProperties.GetValue(T));
-            }
-            catch(ArgumentNullException e)
-            {
-                Console.WriteLine("ArgumentNullException :"+e.Message);
-            }
-            
-        }else{
+            object_id =((Teacher)T).Id;
+        }else if (T is Lesson)
+        {
             collection_name = Lessons_collection;
-            try{	
-            myType = typeof(Lesson);
-            // Get the PropertyInfo object representing MyProperty.
-            PropertyInfo myIdProperties = myType.GetProperty("Id",typeof(int));
-            object_id =(int) myIdProperties.GetValue(T);
-           
-            Console.WriteLine("The value is {0}.", myIdProperties.GetValue(T));
-            }
-            catch(ArgumentNullException e)
-            {
-                Console.WriteLine("ArgumentNullException :"+e.Message);
-            }
-            
+            object_id = object_id =((Lesson)T).Id;
         }
-        
-        return await delete_Document_byid(object_id, collection_name);
+        else if(T is LearnsWith)
+        {
+            collection_name = LearnsWith_collection;
+            return delete_LearnsWith((LearnsWith) T) != null;
+        }
+        if(T is Student || T is Teacher || T is Lesson)
+            return await delete_Document_byid(object_id, collection_name);
+        return false;
          
     }
         
@@ -605,10 +597,10 @@ public class CRUD : crud_inter{
         Dictionary<string, object> newlesson = new Dictionary<string, object>
         {
             { "id", l.Id },
-            { "TeacherId", l.TeacherId },
-            { "StudentId", l.StudentId },
-            { "Date", l.Date },   
-            { "Comment", l.Comment }
+            { "teacherid", l.TeacherId },
+            { "studentid", l.StudentId },
+            { "date", l.Date },   
+            { "comment", l.Comment }
         };
 
 
@@ -640,10 +632,10 @@ public class CRUD : crud_inter{
         Dictionary<string, object> newlessonDic = new Dictionary<string, object>
         {
             { "id", newLesson.Id },
-            { "TeacherId", newLesson.TeacherId },
-            { "StudentId", newLesson.StudentId },
-            { "Date", newLesson.Date },   
-            { "Comment", newLesson.Comment }
+            { "teacherid", newLesson.TeacherId },
+            { "studentid", newLesson.StudentId },
+            { "date", newLesson.Date },   
+            { "comment", newLesson.Comment }
         };
 
 
@@ -692,11 +684,11 @@ public class CRUD : crud_inter{
             Dictionary<string, object> lessonDic = snapshot.ToDictionary();
             
             //lessonDic.TryGetValue("comment", out comment);
-            lesson.Comment = (string) lessonDic["Comment"];
-            lesson.Date = (DateTime) lessonDic["Date"];
+            lesson.Comment = (string) lessonDic["comment"];
+            lesson.Date = (DateTime) lessonDic["date"];
             lesson.Id = (int)(long) lessonDic["id"];
-            lesson.StudentId = (int)(long) lessonDic["StudentId"];
-            lesson.TeacherId = (int)(long) lessonDic["TeacherId"];
+            lesson.StudentId = (int)(long) lessonDic["studentid"];
+            lesson.TeacherId = (int)(long) lessonDic["teacherid"];
             return lesson;
 
 
@@ -710,7 +702,7 @@ public class CRUD : crud_inter{
     {
         CollectionReference lessonsref = db.Collection(Lessons_collection);
         
-        Query q = lessonsref.WhereEqualTo("TeacherId", Lid);
+        Query q = lessonsref.WhereEqualTo("teacherid", Lid);
 
         QuerySnapshot qs = await q.GetSnapshotAsync();
 
@@ -731,7 +723,7 @@ public class CRUD : crud_inter{
     {
         CollectionReference lessonsref = db.Collection(Lessons_collection);
         
-        Query q = lessonsref.WhereEqualTo("StudentId", Lid);
+        Query q = lessonsref.WhereEqualTo("studentid", Lid);
 
         QuerySnapshot qs = await q.GetSnapshotAsync();
 
@@ -743,10 +735,46 @@ public class CRUD : crud_inter{
 
         return arry;
     }
-
-    void crud_inter.Update(object T, int id)
+        
+    public void Update(object T, int id)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<bool> add_LearnsWith(LearnsWith learnsWith)
+    {
+        CollectionReference learnsWithCollection = db.Collection(LearnsWith_collection);
+        return await learnsWithCollection.AddAsync(learnsWith) != null;
+    }
+    public async Task<bool> delete_LearnsWith(LearnsWith learnsWith)
+    {
+        DocumentReference dc = db.Collection(LearnsWith_collection).Document("studentid/" + learnsWith.studentid);
+        return await dc.DeleteAsync() != null;
+    }
+    /*
+        This function gets the teacher that teaches this student
+    */
+    public async Task<LearnsWith> getLearnsWith(int StudentId)
+    {
+        Query collection = db.Collection(LearnsWith_collection).WhereEqualTo("studentid", StudentId);
+        QuerySnapshot snap = await collection.GetSnapshotAsync(); 
+        if(snap.Documents.Count > 0)       
+            return snap.Documents[0].ConvertTo<LearnsWith>();
+        return new LearnsWith(StudentId);
+    }
+    /**
+    This function returns all the students that learn with the teacher by his id
+    */
+    public async Task<ArrayList> getStudentsByTeacher(int teacherId)
+    {
+        Query collection = db.Collection(LearnsWith_collection).WhereEqualTo("teacherid", teacherId);
+        QuerySnapshot snap = await collection.GetSnapshotAsync();
+        ArrayList lst = new ArrayList();
+        foreach(DocumentSnapshot doc in snap.Documents)
+        {
+            lst.Add(doc.ConvertTo<LearnsWith>());
+        }
+        return lst;
     }
 
     

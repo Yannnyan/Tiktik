@@ -8,11 +8,12 @@ public class crud_fun{
 
 
     public static Object from_dictionary_to_Object(Dictionary<string, object> dic, string collection_name){
-        if(collection_name.Equals("Student"))
+        if(collection_name.Equals(CRUD.Students_collection))
             return from_dictionary_to_student(dic);
-        if(collection_name.Equals("Teacher"))
+        if(collection_name.Equals(CRUD.Teachers_collection))
             return from_dictionary_to_theacher(dic); 
-        return from_dictionary_to_lesson(dic);
+        else 
+            return from_dictionary_to_lesson(dic);
     }
 
 
@@ -42,12 +43,11 @@ public class crud_fun{
 
     public static Lesson from_dictionary_to_lesson(Dictionary<string, object> dic){
         Lesson lesson = new Lesson();
-
-        lesson.Comment = (string) dic["Comment"];
-        lesson.Date = (DateTime) dic["Date"];
+        lesson.Comment = (string) dic["comment"];
+        lesson.Date = DateTime.Parse((string)dic["date"]);
         lesson.Id = (int)(long) dic["id"];
-        lesson.StudentId = (int)(long) dic["StudentId"];
-        lesson.TeacherId = (int)(long) dic["TeacherId"];
+        lesson.StudentId = (int)(long) dic["studentid"];
+        lesson.TeacherId = (int)(long) dic["teacherid"];
         return lesson;
 
     }
