@@ -1,12 +1,17 @@
 namespace TiktikHttpServer.Database;
 
 using System.Collections;
+using System.Reflection;
 using Google.Cloud.Firestore;
 using TiktikHttpServer.Models;
 
 
 public class CRUD : crud_inter{
     FirestoreDb db;
+    public string Students_collection = "Student";
+    public string Teachers_collection = "Teacher";
+    public string Lessons_collection = "Lessons";
+
     public CRUD(){
         //System.Environment.SetEnvironmentVariable("C:/Users/ברוכסון/OneDrive/מסמכים/יהונתן/אוניברסיטה עבודות/הנדסת תוכנה/Tiktik/database\tiktikdb-bfa5d-70273e817eb9 (1).json");
          System.Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "C:/Users/ברוכסון/OneDrive/שולחן העבודה/tiktikdb-bfa5d-70273e817eb9 (1).json");
@@ -31,11 +36,11 @@ public class CRUD : crud_inter{
         string collection_name;
 
         if(T is Student){
-            collection_name = "Student";
+            collection_name = Students_collection;
         }else if(T is Teacher){
-            collection_name = "Teacher";
+            collection_name = Teachers_collection;
         }else{
-            collection_name = "Lessons";
+            collection_name = Lessons_collection;
         }
 
 
@@ -59,7 +64,7 @@ public class CRUD : crud_inter{
         if(id <= 0){
             Console.WriteLine("incorrect id ({0}) input (non-positive)", id);
             return false;
-        }else if(collection_name.Equals("Student")  || collection_name.Equals("Teacher") || collection_name.Equals("Lessons")){
+        }else if(collection_name.Equals(Students_collection)  || collection_name.Equals(Teachers_collection) || collection_name.Equals(Lessons_collection)){
                 CollectionReference collectionRef = db.Collection(collection_name);
 
                 Query query = collectionRef.WhereEqualTo("id", id);
@@ -97,13 +102,28 @@ public class CRUD : crud_inter{
     public async Task<int> free_id(string collection_name){
         
         CollectionReference cf = db.Collection(collection_name);
+        //geting a snap shot with no query
         QuerySnapshot allsnaps = await cf.GetSnapshotAsync();
-        int[] arr = new int[allsnaps.Count];
+        int[] idarry = new int[allsnaps.Count];
         int counter = 0;
         foreach (DocumentSnapshot documentSnapshot in allsnaps.Documents)
         {
-            arr[counter] = documentSnapshot.Id
+            idarry[counter] = Int32.Parse(documentSnapshot.Id);
             
+            counter++;
+        }
+        crud_fun.sort(idarry);
+
+        counter = 1;
+        foreach(int i in idarry){
+            if(i == counter){
+                
+                counter++;
+            }else{
+                Console.WriteLine("free id = {0}", counter);
+                return counter;
+            }
+
         }
         return counter;
 
@@ -119,7 +139,7 @@ public class CRUD : crud_inter{
             return false;
         }
 
-        if(collection_name.Equals("Student")  || collection_name.Equals("Teacher") || collection_name.Equals("Lessons")){
+        if(collection_name.Equals(Students_collection)  || collection_name.Equals(Teachers_collection) || collection_name.Equals(Lessons_collection)){
             DocumentReference docRef = db.Collection(collection_name).Document(id.ToString());
             await docRef.UpdateAsync(key, value);
             Console.WriteLine("changed the {0} value at id =  {1}.", key, id);
@@ -130,10 +150,66 @@ public class CRUD : crud_inter{
         
     }
 
+    public async Task<bool> Delete(Object T){
+        string collection_name;
+        Type myType;
+        int object_id = 0;
+
+        if(T is Student){
+            collection_name = Students_collection;
+            try{	
+            myType = typeof(Student);
+            // Get the PropertyInfo object representing MyProperty.
+            PropertyInfo myIdProperties = myType.GetProperty("Id",typeof(int));
+            object_id =(int) myIdProperties.GetValue(T);
+            
+            Console.WriteLine("The value is {0}.", myIdProperties.GetValue(T));
+            }
+            catch(ArgumentNullException e)
+            {
+                Console.WriteLine("ArgumentNullException :"+e.Message);
+            }
+            
+        }else if(T is Teacher){
+            collection_name = Teachers_collection;
+            try{	
+            myType = typeof(Teacher);
+            // Get the PropertyInfo object representing MyProperty.
+            PropertyInfo myIdProperties = myType.GetProperty("Id",typeof(int));
+            object_id =(int) myIdProperties.GetValue(T);
+            
+            Console.WriteLine("The value is {0}.", myIdProperties.GetValue(T));
+            }
+            catch(ArgumentNullException e)
+            {
+                Console.WriteLine("ArgumentNullException :"+e.Message);
+            }
+            
+        }else{
+            collection_name = Lessons_collection;
+            try{	
+            myType = typeof(Lesson);
+            // Get the PropertyInfo object representing MyProperty.
+            PropertyInfo myIdProperties = myType.GetProperty("Id",typeof(int));
+            object_id =(int) myIdProperties.GetValue(T);
+           
+            Console.WriteLine("The value is {0}.", myIdProperties.GetValue(T));
+            }
+            catch(ArgumentNullException e)
+            {
+                Console.WriteLine("ArgumentNullException :"+e.Message);
+            }
+            
+        }
+        
+        return await delete_Document_byid(object_id, collection_name);
+         
+    }
+        
     public async Task<bool> delete_Document_byid(int id, string collection_name){
 
 
-        if(collection_name != "Student" &&  collection_name != "Teacher" && collection_name != "Lessons"){
+        if(collection_name != Students_collection &&  collection_name != Teachers_collection && collection_name != Lessons_collection){
             return false;
         }
 
@@ -158,7 +234,7 @@ public class CRUD : crud_inter{
         if(Did <= 0){
             Console.WriteLine("incorrect id ({0}) input (non-positive)", Did);
             return false;
-        }else if(collection_name.Equals("Student")  || collection_name.Equals("Teacher") || collection_name.Equals("Lessons")){
+        }else if(collection_name.Equals(Students_collection)  || collection_name.Equals(Teachers_collection) || collection_name.Equals(Lessons_collection)){
                 DocumentReference documentReference = db.Collection(collection_name).Document(Did.ToString());
 
                 DocumentSnapshot docsnap = await documentReference.GetSnapshotAsync();
@@ -184,17 +260,17 @@ public class CRUD : crud_inter{
     public async Task<bool> add_student(Student s){
 
         if(s.Id == -1){
-            int new_id = free_id("Student").Result;
+            int new_id = free_id(Students_collection).Result;
             s.Id = new_id;
         }else if(s.Id <= 0){
             Console.WriteLine("incorrect id = {0} input (non-positive)", s.Id);
             return false;
-        }else if(id_exist(s.Id, "Student").Result){
+        }else if(id_exist(s.Id, Students_collection).Result){
             Console.WriteLine("student id = {0} already exist", s.Id);
             return false;
         }
         
-        DocumentReference docRef = db.Collection("Student").Document(s.Id.ToString());
+        DocumentReference docRef = db.Collection(Students_collection).Document(s.Id.ToString());
 
         Dictionary<string, object> newuser = new Dictionary<string, object>
         {
@@ -206,7 +282,7 @@ public class CRUD : crud_inter{
         }; 
 
         WriteResult writeResult = await docRef.SetAsync(newuser);
-        Console.WriteLine(writeResult.UpdateTime);
+        //Console.WriteLine(writeResult.UpdateTime);
         Console.WriteLine("Added data to the Student collection.");
 
         return true;
@@ -215,7 +291,7 @@ public class CRUD : crud_inter{
 
     public async Task<Student> get_student_byid(int id)
     {
-        DocumentReference docRef = db.Collection("Student").Document(id.ToString());
+        DocumentReference docRef = db.Collection(Students_collection).Document(id.ToString());
         
         DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
 
@@ -243,17 +319,17 @@ public class CRUD : crud_inter{
     public async Task<bool> add_student(string phone, string name, string pass, string email, int id){
         
         if(id == -1){
-            id = free_id("Student").Result;
+            id = free_id(Students_collection).Result;
             Console.WriteLine("THE ID IS: {0}", id);
         }else if(id <= 0){
             Console.WriteLine("incorrect id = {0} input (non-positive)", id);
             return false;
-        }else if(id_exist(id, "Student").Result){
+        }else if(id_exist(id, Students_collection).Result){
             Console.WriteLine("student id = {0} already exist", id);
             return false;
         }
     
-        DocumentReference docRef = db.Collection("Student").Document(id.ToString());
+        DocumentReference docRef = db.Collection(Students_collection).Document(id.ToString());
 
         Student new_student = new Student(phone, name, pass, email, id);
 
@@ -280,12 +356,12 @@ public class CRUD : crud_inter{
     //delete a student by identifier string id
     public async Task<bool> delete_student(int id){
 
-        if(!id_exist(id, "Student").Result){
+        if(!id_exist(id, Students_collection).Result){
             Console.WriteLine("Student does not exist");
             return false;
         }else{
 
-            DocumentReference docRef = db.Collection("Student").Document(id.ToString());
+            DocumentReference docRef = db.Collection(Students_collection).Document(id.ToString());
             WriteResult writeResult = await docRef.DeleteAsync();
             Console.WriteLine(writeResult.UpdateTime);
             Console.WriteLine("deleted data from Student collection.");
@@ -296,11 +372,11 @@ public class CRUD : crud_inter{
     
 
     public async Task<bool> change_s_phone_byid(string phone, int id){
-        if(!id_exist(id, "Student").Result){
+        if(!id_exist(id, Students_collection).Result){
             Console.WriteLine("Student does not exist");
             return false;
         }else{
-            DocumentReference docRef = db.Collection("Student").Document(id.ToString());
+            DocumentReference docRef = db.Collection(Students_collection).Document(id.ToString());
             await docRef.UpdateAsync("phone", phone);
             Console.WriteLine("changed the value.");
 
@@ -312,11 +388,11 @@ public class CRUD : crud_inter{
 
      public async Task<bool> change_s_email_byid(string email, int id){
 
-        if(!id_exist(id, "Student").Result){
+        if(!id_exist(id, Students_collection).Result){
             Console.WriteLine("Student does not exist");
             return false;
         }else{
-            DocumentReference docRef = db.Collection("Student").Document(id.ToString());
+            DocumentReference docRef = db.Collection(Students_collection).Document(id.ToString());
 
             await docRef.UpdateAsync("email", email);
 
@@ -331,11 +407,11 @@ public class CRUD : crud_inter{
 
     public async Task<bool> change_s_name_byid(string name, int id){
 
-        if(!id_exist(id, "Student").Result){
+        if(!id_exist(id, Students_collection).Result){
             Console.WriteLine("Student does not exist");
             return false;
         }else{
-            DocumentReference docRef = db.Collection("Student").Document(id.ToString());
+            DocumentReference docRef = db.Collection(Students_collection).Document(id.ToString());
             await docRef.UpdateAsync("name", name);
             Console.WriteLine("changed the value.");
             return true;
@@ -345,11 +421,11 @@ public class CRUD : crud_inter{
 
     public async Task<bool> change_s_pass_byid(string pass, int id){
 
-        if(!id_exist(id, "Student").Result){
+        if(!id_exist(id, Students_collection).Result){
             Console.WriteLine("Student does not exist");
             return false;
         }else{
-            DocumentReference docRef = db.Collection("Student").Document(id.ToString());
+            DocumentReference docRef = db.Collection(Students_collection).Document(id.ToString());
             await docRef.UpdateAsync("password", pass);
             Console.WriteLine("changed the value.");
             return true;
@@ -364,17 +440,17 @@ public class CRUD : crud_inter{
     public async Task<bool> add_theacher(string phone, string name, string pass, string email, int id){
 
         if(id == -1){
-            int new_id = free_id("Teacher").Result;
+            int new_id = free_id(Teachers_collection).Result;
             id = new_id;
         }else if(id <= 0){
             Console.WriteLine("incorrect id = {0} input (non-positive)", id);
             return false;
-        }else if(id_exist(id, "Teacher").Result){
+        }else if(id_exist(id, Teachers_collection).Result){
             Console.WriteLine("Teacher id = {0} already exist", id);
             return false;
         }
     
-        DocumentReference docRef = db.Collection("Teacher").Document(id.ToString());
+        DocumentReference docRef = db.Collection(Teachers_collection).Document(id.ToString());
 
         Teacher new_teacher = new Teacher(phone, name, pass, email, id);
 
@@ -389,7 +465,7 @@ public class CRUD : crud_inter{
 
 
         WriteResult writeResult = await docRef.SetAsync(newuser);
-        Console.WriteLine(writeResult.UpdateTime);
+        //Console.WriteLine(writeResult.UpdateTime);
         Console.WriteLine("Added data to the Teacher collection.");
 
         return true;
@@ -401,17 +477,17 @@ public class CRUD : crud_inter{
     public async Task<bool> add_theacher(Teacher t){
 
         if(t.Id == -1){
-            int new_id = free_id("Teacher").Result;
+            int new_id = free_id(Teachers_collection).Result;
             t.Id = new_id;
         }else if(t.Id <= 0){
             Console.WriteLine("incorrect id = {0} input (non-positive)", t.Id);
             return false;
-        }else if(id_exist(t.Id, "Teacher").Result){
+        }else if(id_exist(t.Id, Teachers_collection).Result){
             Console.WriteLine("Teacher id = {0} already exist", t.Id);
             return false;
         }
     
-        DocumentReference docRef = db.Collection("Teacher").Document(t.Id.ToString());
+        DocumentReference docRef = db.Collection(Teachers_collection).Document(t.Id.ToString());
 
         Dictionary<string, object> newuser = new Dictionary<string, object>
         {
@@ -424,7 +500,7 @@ public class CRUD : crud_inter{
 
 
         WriteResult writeResult = await docRef.SetAsync(newuser);
-        Console.WriteLine(writeResult.UpdateTime);
+        //Console.WriteLine(writeResult.UpdateTime);
         Console.WriteLine("Added data to the Teacher collection.");
 
         return true;
@@ -435,7 +511,7 @@ public class CRUD : crud_inter{
 
     public async Task<Teacher> get_theacher_byid(int id)
     {
-        DocumentReference docRef = db.Collection("Teacher").Document(id.ToString());
+        DocumentReference docRef = db.Collection(Teachers_collection).Document(id.ToString());
         
         DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
 
@@ -459,11 +535,11 @@ public class CRUD : crud_inter{
     }
 
     public async Task<bool> change_t_phone_byid(string phone, int id){
-        if(!id_exist(id, "Teacher").Result){
+        if(!id_exist(id, Teachers_collection).Result){
             Console.WriteLine("teacher doesnt exist");
             return false;
         }else{
-            DocumentReference docRef = db.Collection("Teacher").Document(id.ToString());
+            DocumentReference docRef = db.Collection(Teachers_collection).Document(id.ToString());
             await docRef.UpdateAsync("phone", phone);
             Console.WriteLine("changed the value.");
             return true;
@@ -471,11 +547,11 @@ public class CRUD : crud_inter{
         
     }
     public async Task<bool> change_t_name_byid(string name, int id){
-        if(!id_exist(id, "Teacher").Result){
+        if(!id_exist(id, Teachers_collection).Result){
             Console.WriteLine("teacher doesnt exist");
             return false;
         }else{
-            DocumentReference docRef = db.Collection("Teacher").Document(id.ToString());
+            DocumentReference docRef = db.Collection(Teachers_collection).Document(id.ToString());
             await docRef.UpdateAsync("name", name);
             Console.WriteLine("changed the value.");
             return true;
@@ -483,11 +559,11 @@ public class CRUD : crud_inter{
         
     }
     public async Task<bool> change_t_pass_byid(string pass, int id){
-        if(!id_exist(id, "Teacher").Result){
+        if(!id_exist(id, Teachers_collection).Result){
             Console.WriteLine("teacher doesnt exist");
             return false;
         }else{
-            DocumentReference docRef = db.Collection("Teacher").Document(id.ToString());
+            DocumentReference docRef = db.Collection(Teachers_collection).Document(id.ToString());
             await docRef.UpdateAsync("password", pass);
             Console.WriteLine("changed the value.");
             return true;
@@ -495,11 +571,11 @@ public class CRUD : crud_inter{
         
     }
     public async Task<bool> change_t_email_byid(string email, int id){
-        if(!id_exist(id, "Teacher").Result){
+        if(!id_exist(id, Teachers_collection).Result){
             Console.WriteLine("teacher doesnt exist");
             return false;
         }else{
-            DocumentReference docRef = db.Collection("Teacher").Document(id.ToString());
+            DocumentReference docRef = db.Collection(Teachers_collection).Document(id.ToString());
             await docRef.UpdateAsync("email", email);
             Console.WriteLine("changed the value.");
             return true;
@@ -519,12 +595,12 @@ public class CRUD : crud_inter{
         }else if(l.Id <= 0){
             Console.WriteLine("incorrect id = {0} input (non-positive)", l.Id);
             return false;
-        }else if(id_exist(l.Id, "Lessons").Result){
+        }else if(id_exist(l.Id, Lessons_collection).Result){
             Console.WriteLine("Lesson id = {0} already exist", l.Id);
             return false;
         }
     
-        DocumentReference docRef = db.Collection("Lessons").Document(l.Id.ToString());
+        DocumentReference docRef = db.Collection(Lessons_collection).Document(l.Id.ToString());
 
         Dictionary<string, object> newlesson = new Dictionary<string, object>
         {
@@ -552,14 +628,14 @@ public class CRUD : crud_inter{
         }else if(id <= 0){
             Console.WriteLine("incorrect id = {0} input (non-positive)", id);
             return false;
-        }else if(id_exist(id, "Lessons").Result){
+        }else if(id_exist(id, Lessons_collection).Result){
             Console.WriteLine("Lesson id = {0} already exist", id);
             return false;
         }
 
         Lesson newLesson = new Lesson(id, TheacherId, StudentId, date, comment);
     
-        DocumentReference docRef = db.Collection("Lessons").Document(id.ToString());
+        DocumentReference docRef = db.Collection(Lessons_collection).Document(id.ToString());
 
         Dictionary<string, object> newlessonDic = new Dictionary<string, object>
         {
@@ -580,11 +656,11 @@ public class CRUD : crud_inter{
 
     public async Task<bool> change_comment_byid(int id, string comment)
     {
-        if(!id_exist(id, "Lessons").Result){
+        if(!id_exist(id, Lessons_collection).Result){
             Console.WriteLine("lesson doesnt exist");
             return false;
         }else{
-            DocumentReference docRef = db.Collection("Lessons").Document(id.ToString());
+            DocumentReference docRef = db.Collection(Lessons_collection).Document(id.ToString());
             await docRef.UpdateAsync("Comment", comment);
             Console.WriteLine("changed the comment.");
             return true;
@@ -593,11 +669,11 @@ public class CRUD : crud_inter{
 
     public async Task<bool> change_date_byid(int Lid, Timestamp newDate)
     {
-        if(!id_exist(Lid, "Lessons").Result){
+        if(!id_exist(Lid, Lessons_collection).Result){
             Console.WriteLine("lesson doesnt exist");
             return false;
         }else{
-            DocumentReference docRef = db.Collection("Lessons").Document(Lid.ToString());
+            DocumentReference docRef = db.Collection(Lessons_collection).Document(Lid.ToString());
             await docRef.UpdateAsync("Date", newDate);
             Console.WriteLine("changed the Date.");
             return true;
@@ -606,7 +682,7 @@ public class CRUD : crud_inter{
 
     public async Task<Lesson> get_lesson_byid(int Lid)
     {
-        DocumentReference docRef = db.Collection("Lessons").Document(Lid.ToString());
+        DocumentReference docRef = db.Collection(Lessons_collection).Document(Lid.ToString());
         
         DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
 
@@ -632,7 +708,7 @@ public class CRUD : crud_inter{
 
     public async Task<ArrayList> get_my_lessons_as_theacher(int Lid)
     {
-        CollectionReference lessonsref = db.Collection("Lessons");
+        CollectionReference lessonsref = db.Collection(Lessons_collection);
         
         Query q = lessonsref.WhereEqualTo("TeacherId", Lid);
 
@@ -653,7 +729,7 @@ public class CRUD : crud_inter{
 
     public async Task<ArrayList> get_my_lessons_as_student(int Lid)
     {
-        CollectionReference lessonsref = db.Collection("Lessons");
+        CollectionReference lessonsref = db.Collection(Lessons_collection);
         
         Query q = lessonsref.WhereEqualTo("StudentId", Lid);
 
@@ -673,9 +749,6 @@ public class CRUD : crud_inter{
         throw new NotImplementedException();
     }
 
-    void crud_inter.Delete(object T)
-    {
-        throw new NotImplementedException();
-    }
+    
 }
 

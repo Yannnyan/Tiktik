@@ -111,7 +111,7 @@ public interface crud_inter{
     // if T is student, update the student with that id to be T
     public void Update(Object T, int id);
     // delete the object T from the database
-    public void Delete(Object T);
+   public Task<bool> Delete(Object T);
 
 
 
