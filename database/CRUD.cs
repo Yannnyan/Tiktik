@@ -9,7 +9,7 @@ public class CRUD : crud_inter{
     FirestoreDb db;
     public CRUD(){
         //System.Environment.SetEnvironmentVariable("C:/Users/ברוכסון/OneDrive/מסמכים/יהונתן/אוניברסיטה עבודות/הנדסת תוכנה/Tiktik/database\tiktikdb-bfa5d-70273e817eb9 (1).json");
-         System.Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "C:/Users/ברוכסון/OneDrive/שולחן העבודה/tiktikdb-bfa5d-70273e817eb9 (1).json");
+         System.Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "tiktikdb-bfa5d-70273e817eb9 (1).json");
         db = FirestoreDb.Create("tiktikdb-bfa5d");
         Console.WriteLine("Created Cloud Firestore client with project ID: tiktikdb-bfa5d");
 
@@ -673,6 +673,54 @@ public class CRUD : crud_inter{
         return arry;
     }
 
-    
+    public Task<bool> add_student(string phone, string name, string pass, string email, int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<bool> add_theacher(string phone, string name, string pass, string email, int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<bool> add_theacher(Teacher t)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<bool> add_lesson(Lesson l)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<bool> add_lesson(int id, int TheacherId, int StudentId, Timestamp date, string comment)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<bool> change_date_byid(int id, Timestamp newDate)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<bool> add(object T)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<ArrayList> GetAll(object T)
+    {
+       throw new NotImplementedException();
+    }
+
+    public void Update(object T, int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<bool> Delete(object T)
+    {
+        throw new NotImplementedException();
+    }
 }
 

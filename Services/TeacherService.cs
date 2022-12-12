@@ -2,7 +2,7 @@
 using TiktikHttpServer.Models;
 
 namespace TiktikHttpServer.Services;
-
+using TiktikHttpServer.Database;
 public class TeacherService
 {
     static List<Teacher> Teachers {get;}
@@ -10,12 +10,13 @@ public class TeacherService
     static int nextId = 3;
     static TeacherService()
     {
-        Teachers = new List<Teacher>
-        {
-            new Teacher {Id = 1, Name = "Haim levi", Email = "haimLevi@gmail.com", Password = "123456", Phone = "0001234567"}
-            , new Teacher {Id = 2, Name = "Yoni ben el", Email = "yoniBelEl@gmail.com", Password = "321654", Phone = "1231231234"}
+        Teachers = CrudService.crud.GetAll(new Teacher()).Result.Cast<Teacher>().ToList();
+        // Teachers = new List<Teacher>
+        // {
+        //     new Teacher {Id = 1, Name = "Haim levi", Email = "haimLevi@gmail.com", Password = "123456", Phone = "0001234567"}
+        //     , new Teacher {Id = 2, Name = "Yoni ben el", Email = "yoniBelEl@gmail.com", Password = "321654", Phone = "1231231234"}
 
-        };
+        // };
         TeacherToStudents = new Dictionary<int, List<int>>();
         List<int> l1 = new List<int>();
         l1.Add(2);
@@ -46,6 +47,7 @@ public class TeacherService
     {
         Teacher.Id = nextId++;
         Teachers.Add(Teacher);
+        CrudService.crud.add(Teacher);
     }
 
     public static void Delete(int id)

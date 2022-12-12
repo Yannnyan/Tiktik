@@ -1,12 +1,18 @@
 namespace TiktikHttpServer.Models;
+using Google.Cloud.Firestore;
 
-
+[FirestoreData]
 public class Student
 {
+    [FirestoreProperty("id")]
     public int Id{get; set;}
+    [FirestoreProperty("password")]
     public String? Password{get; set;}
+    [FirestoreProperty("name")]
     public String? Name{get; set;}
+    [FirestoreProperty("phone")]
     public String? Phone{get; set;}
+    [FirestoreProperty("email")]
     public String? Email{get; set;}
     
     
