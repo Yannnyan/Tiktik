@@ -6,6 +6,16 @@ using TiktikHttpServer.Models;
 
 public class crud_fun{
 
+
+    public static Object from_dictionary_to_Object(Dictionary<string, object> dic, string collection_name){
+        if(collection_name.Equals("Student"))
+            return from_dictionary_to_student(dic);
+        if(collection_name.Equals("Teacher"))
+            return from_dictionary_to_theacher(dic); 
+        return from_dictionary_to_lesson(dic);
+    }
+
+
     public static Student from_dictionary_to_student(Dictionary<string, object> dic){
         Student s = new Student();
 
@@ -40,5 +50,24 @@ public class crud_fun{
         lesson.TeacherId = (int)(long) dic["TeacherId"];
         return lesson;
 
+    }
+
+    public static void sort(int[] arr)
+    {
+        int n = arr.Length;
+        for (int i = 1; i < n; ++i) {
+            int key = arr[i];
+            int j = i - 1;
+ 
+            // Move elements of arr[0..i-1],
+            // that are greater than key,
+            // to one position ahead of
+            // their current position
+            while (j >= 0 && arr[j] > key) {
+                arr[j + 1] = arr[j];
+                j = j - 1;
+            }
+            arr[j + 1] = key;
+        }
     }
 }
