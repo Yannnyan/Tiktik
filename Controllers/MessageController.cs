@@ -21,8 +21,7 @@ public class MessageController : ControllerBase
     [HttpPost("Login")]
     public ActionResult<Response> Login(User user)
     {
-        Console.WriteLine("Email: " + user.Email);
-        Console.WriteLine("Password: " + user.Password);
+        Console.WriteLine("User has Logged in: " + user.ToString());
         Student? std;
         Teacher? teach;
         try{
@@ -37,14 +36,15 @@ public class MessageController : ControllerBase
             }
             else{
                 std = StudentService.Get(user.Email);
-                if (std is null)
+                if (std == null)
                     return NotFound();
                 LogService.LogIn(std);
                 return new Response_Student(std);
             }
         }
-        catch(Exception)
+        catch(Exception e)
         {
+            Console.WriteLine(e.ToString());
             return NotFound();
         }
     }

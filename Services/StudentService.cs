@@ -12,6 +12,11 @@ public class StudentService
     static StudentService()
     {
         Students = CrudService.crud.GetAll(new Student()).Result.Cast<Student>().ToList();
+        foreach(Student student in Students)
+        {
+            Console.Out.WriteLine(student.ToString());
+        }
+        Console.Out.WriteLine(Get("idan@gmail.com").ToString());
         nextId = Students.Max(std => std.Id) + 1;
         // Students = new List<Student>
         // {
@@ -28,6 +33,7 @@ public class StudentService
         {
             StudentToTeacher.Add(map.studentid, map.teacherid);
         }
+        
     }
     public static void AddTeacherToStudent(int StudentId, int TeacherId)
     {
@@ -35,7 +41,14 @@ public class StudentService
     }
     public static int? GetTeacherId(int StudentId)
     {
-        return StudentToTeacher[StudentId];
+        try{
+            return StudentToTeacher[StudentId];
+        }
+        catch(KeyNotFoundException)
+        {
+            return null;
+        }
+        
     }
     public static List<Student> GetAll() => Students;
 

@@ -32,7 +32,11 @@ public class Student
         this.Password = "";
         this.Phone = "";
     }
-
+    
+    public override string ToString()
+    {
+        return this.Email + ", " + this.Name + ", " + this.Id + ", " + this.Password + ", " + this.Phone;
+    }
 }
 
 

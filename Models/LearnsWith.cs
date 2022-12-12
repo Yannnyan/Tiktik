@@ -17,6 +17,10 @@ public class LearnsWith
         this.studentid = studentid;
     }   
 
+    public override string ToString()
+    {
+        return this.studentid + ", " + this.teacherid;
+    }
 
 
 }
