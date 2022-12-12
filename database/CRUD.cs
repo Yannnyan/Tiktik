@@ -590,7 +590,7 @@ public class CRUD : crud_inter{
     public async Task<bool> add_lesson(Lesson l)
     {
         if(l.Id == -1){
-            int new_id = free_id("Lesson").Result;
+            int new_id = free_id(Lessons_collection).Result;
             l.Id = new_id;
         }else if(l.Id <= 0){
             Console.WriteLine("incorrect id = {0} input (non-positive)", l.Id);
@@ -623,7 +623,7 @@ public class CRUD : crud_inter{
 
     public async Task<bool> add_lesson(int id, int TheacherId, int StudentId, DateTime date, string comment){
         if(id == -1){
-            int new_id = free_id("Lesson").Result;
+            int new_id = free_id(Lessons_collection).Result;
             id = new_id;
         }else if(id <= 0){
             Console.WriteLine("incorrect id = {0} input (non-positive)", id);
