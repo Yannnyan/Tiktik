@@ -17,7 +17,7 @@ public class testStuff
 
         Timestamp date = new Timestamp();
         int counter = 1;
-        Lesson l = new Lesson(-1, counter, 1, date, "this lesson comment");
+        Lesson l = new Lesson(-1, counter, 1, "date", "this lesson comment");
 
         for(int i = 1; i<10; i++){
             s.Id = -1;
