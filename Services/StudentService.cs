@@ -16,7 +16,7 @@ public class StudentService
         {
             Console.Out.WriteLine(student.ToString());
         }
-        Console.Out.WriteLine(Get("idan@gmail.com").ToString());
+        // Console.Out.WriteLine(Get("idan@gmail.com").ToString());
         nextId = Students.Max(std => std.Id) + 1;
         // Students = new List<Student>
         // {

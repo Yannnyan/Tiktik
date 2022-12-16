@@ -28,7 +28,7 @@ public static string LearnsWith_collection = "LearnsWith";
         }else if(T is Teacher){
             return await add_theacher((Teacher)T);
         }else if(T is Lesson){
-            return await  add_lesson((Lesson)T);
+            return await add_lesson((Lesson)T);
         }
         else if(T is LearnsWith)
         {
@@ -47,11 +47,14 @@ public static string LearnsWith_collection = "LearnsWith";
         }else if(T is Lesson){
             collection_name = Lessons_collection;
         }
-        else
+        else if(T is LearnsWith)
         {
             collection_name = LearnsWith_collection;
         }
-
+        else
+        {
+            collection_name = "default";
+        }
 
         CollectionReference lessonsref = db.Collection(collection_name);
         
@@ -581,34 +584,47 @@ public static string LearnsWith_collection = "LearnsWith";
 
     public async Task<bool> add_lesson(Lesson l)
     {
-        if(l.Id == -1){
-            int new_id = free_id(Lessons_collection).Result;
-            l.Id = new_id;
-        }else if(l.Id <= 0){
-            Console.WriteLine("incorrect id = {0} input (non-positive)", l.Id);
+        // if(l.Id == -1){
+        //     int new_id = free_id(Lessons_collection).Result;
+        //     l.Id = new_id;
+        // }else if(l.Id <= 0){
+        //     Console.WriteLine("incorrect id = {0} input (non-positive)", l.Id);
+        //     return false;
+        // }else if(id_exist(l.Id, Lessons_collection).Result){
+        //     Console.WriteLine("Lesson id = {0} already exist", l.Id);
+        //     return false;
+        // }
+        if(l.Comment is null)
             return false;
-        }else if(id_exist(l.Id, Lessons_collection).Result){
-            Console.WriteLine("Lesson id = {0} already exist", l.Id);
-            return false;
-        }
-    
-        DocumentReference docRef = db.Collection(Lessons_collection).Document(l.Id.ToString());
-
-        Dictionary<string, object> newlesson = new Dictionary<string, object>
+        Dictionary<string, object> docData = new Dictionary<string, object>
         {
             { "id", l.Id },
-            { "teacherid", l.TeacherId },
             { "studentid", l.StudentId },
-            { "date", l.Date },   
-            { "comment", l.Comment }
+            { "teacherid", l.TeacherId },
+            { "date", l.Date.ToString("s") },
+            {"comment", l.Comment}
         };
 
-
-        WriteResult writeResult = await docRef.SetAsync(newlesson);
-        Console.WriteLine(writeResult.UpdateTime);
-        Console.WriteLine("Added data to the Lessons collection.");
+        await db.Collection(Lessons_collection).Document(l.Id.ToString()).SetAsync(docData);
 
         return true;
+        // DocumentReference docRef = db.Collection(Lessons_collection).Document(l.Id.ToString());
+
+        // Dictionary<string, object> newlesson = new Dictionary<string, object>
+        // {
+        //     { "id", l.Id },
+        //     { "teacherid", l.TeacherId },
+        //     { "studentid", l.StudentId },
+        //     { "date", l.Date },   
+        //     { "comment", l.Comment }
+        // };
+
+
+        // WriteResult writeResult = await docRef.SetAsync(newlesson);
+        // Console.WriteLine(writeResult.UpdateTime);
+        // Console.WriteLine("Added data to the Lessons collection.");
+
+        // return true;
         
 
     }
