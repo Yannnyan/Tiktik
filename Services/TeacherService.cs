@@ -2,28 +2,39 @@
 using TiktikHttpServer.Models;
 
 namespace TiktikHttpServer.Services;
-
+using TiktikHttpServer.Database;
 public class TeacherService
 {
     static List<Teacher> Teachers {get;}
     static Dictionary<int, List<int>> TeacherToStudents;
-    static int nextId = 3;
+    static int nextId;
     static TeacherService()
     {
-        Teachers = new List<Teacher>
-        {
-            new Teacher {Id = 1, Name = "Haim levi", Email = "haimLevi@gmail.com", Password = "123456", Phone = "0001234567"}
-            , new Teacher {Id = 2, Name = "Yoni ben el", Email = "yoniBelEl@gmail.com", Password = "321654", Phone = "1231231234"}
+        Teachers = CrudService.crud.GetAll(new Teacher()).Result.Cast<Teacher>().ToList();
+        nextId = Teachers.Max(std => std.Id) + 1;
 
-        };
+        // Teachers = new List<Teacher>
+        // {
+        //     new Teacher {Id = 1, Name = "Haim levi", Email = "haimLevi@gmail.com", Password = "123456", Phone = "0001234567"}
+        //     , new Teacher {Id = 2, Name = "Yoni ben el", Email = "yoniBelEl@gmail.com", Password = "321654", Phone = "1231231234"}
+
+        // };
         TeacherToStudents = new Dictionary<int, List<int>>();
-        List<int> l1 = new List<int>();
-        l1.Add(2);
-        List<int> l2 = new List<int>();
-        l2.Add(1);
-        TeacherToStudents.Add(1, l1);
-        TeacherToStudents.Add(2, l2);
-
+        updateTeacherToStudents();
+    }
+    private static void updateTeacherToStudents()
+    {
+       
+        foreach(Teacher teacher in Teachers)
+        {
+            TeacherToStudents.Add(teacher.Id, new List<int>());
+            List<LearnsWith> lst = CrudService.crud.getStudentsByTeacher(teacher.Id).Result.Cast<LearnsWith>().ToList();
+            lst.ForEach(v => 
+            {
+                if(v.teacherid == teacher.Id) 
+                    TeacherToStudents[teacher.Id].Add(v.studentid);
+            });
+        }
     }
     public static List<int> GetAllStudents(int TeacherId)
     {
@@ -46,6 +57,7 @@ public class TeacherService
     {
         Teacher.Id = nextId++;
         Teachers.Add(Teacher);
+        CrudService.crud.add(Teacher);
     }
 
     public static void Delete(int id)
@@ -55,6 +67,7 @@ public class TeacherService
             return;
 
         Teachers.Remove(Teacher);
+        CrudService.crud.Delete(Teacher);
     }
 
     public static void Update(Teacher Teacher)

@@ -1,12 +1,18 @@
 namespace TiktikHttpServer.Models;
+using Google.Cloud.Firestore;
 
-
+[FirestoreData]
 public class Student
 {
+    [FirestoreProperty("id")]
     public int Id{get; set;}
+    [FirestoreProperty("password")]
     public String? Password{get; set;}
+    [FirestoreProperty("name")]
     public String? Name{get; set;}
+    [FirestoreProperty("phone")]
     public String? Phone{get; set;}
+    [FirestoreProperty("email")]
     public String? Email{get; set;}
     
     
@@ -26,7 +32,11 @@ public class Student
         this.Password = "";
         this.Phone = "";
     }
-
+    
+    public override string ToString()
+    {
+        return this.Email + ", " + this.Name + ", " + this.Id + ", " + this.Password + ", " + this.Phone;
+    }
 }
 
 

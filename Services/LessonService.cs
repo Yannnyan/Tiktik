@@ -6,18 +6,20 @@ namespace TiktikHttpServer.Services;
 public class LessonService
 {
     public static List<Lesson> Lessons {get;}
-    static int nextId = 3;
+    static int nextId;
     static LessonService()
     {
-        Lessons = new List<Lesson>
-        {
-            new Lesson {Id = 1, TeacherId = 1, StudentId = 1, Comment = "Meet me at new zealand."},
-            new Lesson {Id = 2, TeacherId = 2, StudentId = 2, Comment = "Ariel, Rehov Hatziyonut."}
-        };
+        Lessons = CrudService.crud.GetAll(new Lesson()).Result.Cast<Lesson>().ToList();
+        nextId = Lessons.Max(std => std.Id) + 1;
+        // Lessons = new List<Lesson>
+        // {
+        //     new Lesson {Id = 1, TeacherId = 1, StudentId = 1, Comment = "Meet me at new zealand."},
+        //     new Lesson {Id = 2, TeacherId = 2, StudentId = 2, Comment = "Ariel, Rehov Hatziyonut."}
+        // };
     }
     public static List<Lesson> GetAll()
     {
-        Console.WriteLine(Lessons[0].Id);
+        // Console.WriteLine(Lessons[0].Id);
         return Lessons;
     }
     public static List<Lesson> GetByStudent(int studentId)
@@ -49,6 +51,7 @@ public class LessonService
     {
         lesson.Id = nextId++;
         Lessons.Add(lesson);
+        CrudService.crud.add(lesson);
     }
     public static void Delete(int lessonId)
     {
@@ -56,6 +59,7 @@ public class LessonService
         if (lesson is null)
             return;
         Lessons.Remove(lesson);
+        CrudService.crud.Delete(lesson);
     }
 
     public static void Update(Lesson lesson)

@@ -1,31 +1,54 @@
 using TiktikHttpServer.Models;
-
+using TiktikHttpServer.Database;
+using System.Collections;
 namespace TiktikHttpServer.Services;
 
 public class StudentService
 {
     static List<Student> Students {get;}
     static Dictionary<int, int?> StudentToTeacher{get;}
-    static int nextId = 3;
+    static int nextId;
+
     static StudentService()
     {
-        Students = new List<Student>
+        Students = CrudService.crud.GetAll(new Student()).Result.Cast<Student>().ToList();
+        foreach(Student student in Students)
         {
-            new Student {Id = 1, Name = "Moshe cohen", Email = "mosheCohen@gmail.com", Password = "123456", Phone = "0001234567"}
-            , new Student {Id = 2, Name = "Yossi zaguri", Email = "YossiZaguri@gmail.com", Password = "321654", Phone = "1231231234"}
-        };
+            Console.Out.WriteLine(student.ToString());
+        }
+        Console.Out.WriteLine(Get("idan@gmail.com").ToString());
+        nextId = Students.Max(std => std.Id) + 1;
+        // Students = new List<Student>
+        // {
+        //     new Student {Id = 1, Name = "Moshe cohen", Email = "mosheCohen@gmail.com", Password = "123456", Phone = "0001234567"}
+        //     , new Student {Id = 2, Name = "Yossi zaguri", Email = "YossiZaguri@gmail.com", Password = "321654", Phone = "1231231234"}
+        // };
         StudentToTeacher = new Dictionary<int, int?>();
-        StudentToTeacher.Add(1, 2);
-        StudentToTeacher.Add(2, 1);
+        update_StudentToTeacher();
+    }
+    private static void update_StudentToTeacher()
+    {
+        List<LearnsWith> lst = CrudService.crud.GetAll(new LearnsWith()).Result.Cast<LearnsWith>().ToList();
+        foreach(LearnsWith map in lst)
+        {
+            StudentToTeacher.Add(map.studentid, map.teacherid);
+        }
+        
     }
     public static void AddTeacherToStudent(int StudentId, int TeacherId)
     {
         StudentToTeacher[StudentId] = TeacherId;
-
     }
     public static int? GetTeacherId(int StudentId)
     {
-        return StudentToTeacher[StudentId];
+        try{
+            return StudentToTeacher[StudentId];
+        }
+        catch(KeyNotFoundException)
+        {
+            return null;
+        }
+        
     }
     public static List<Student> GetAll() => Students;
 
@@ -35,8 +58,9 @@ public class StudentService
     {
         student.Id = nextId++;
         Students.Add(student);
-        StudentToTeacher.Add(student.Id, null);
-        // TODO: Add Database integration here
+        // StudentToTeacher.Add(student.Id, null);
+        CrudService.crud.add(student);
+
     }
 
     public static void Delete(int id)
@@ -46,7 +70,7 @@ public class StudentService
             return;
 
         Students.Remove(student);
-        // TODO: Add Database integration here
+        CrudService.crud.Delete(student);
 
     }
 

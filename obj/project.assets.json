@@ -8,14 +8,10 @@
           "Google.Protobuf": "[3.21.0, 4.0.0)"
         },
         "compile": {
-          "lib/netstandard2.0/Google.Api.CommonProtos.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.0/Google.Api.CommonProtos.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Google.Api.CommonProtos.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.0/Google.Api.CommonProtos.dll": {}
         }
       },
       "Google.Api.Gax/4.0.0": {
@@ -25,14 +21,10 @@
           "Newtonsoft.Json": "13.0.1"
         },
         "compile": {
-          "lib/netstandard2.1/Google.Api.Gax.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.1/Google.Api.Gax.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.1/Google.Api.Gax.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.1/Google.Api.Gax.dll": {}
         }
       },
       "Google.Api.Gax.Grpc/4.0.0": {
@@ -47,14 +39,10 @@
           "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
         },
         "compile": {
-          "lib/netstandard2.1/Google.Api.Gax.Grpc.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.1/Google.Api.Gax.Grpc.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.1/Google.Api.Gax.Grpc.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.1/Google.Api.Gax.Grpc.dll": {}
         }
       },
       "Google.Apis/1.56.0": {
@@ -63,14 +51,10 @@
           "Google.Apis.Core": "1.56.0"
         },
         "compile": {
-          "lib/netstandard2.0/Google.Apis.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.0/Google.Apis.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Google.Apis.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.0/Google.Apis.dll": {}
         }
       },
       "Google.Apis.Auth/1.56.0": {
@@ -81,15 +65,11 @@
         },
         "compile": {
           "lib/netstandard2.0/Google.Apis.Auth.PlatformServices.dll": {},
-          "lib/netstandard2.0/Google.Apis.Auth.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.0/Google.Apis.Auth.dll": {}
         },
         "runtime": {
           "lib/netstandard2.0/Google.Apis.Auth.PlatformServices.dll": {},
-          "lib/netstandard2.0/Google.Apis.Auth.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.0/Google.Apis.Auth.dll": {}
         }
       },
       "Google.Apis.Core/1.56.0": {
@@ -98,14 +78,10 @@
           "Newtonsoft.Json": "13.0.1"
         },
         "compile": {
-          "lib/netstandard2.0/Google.Apis.Core.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.0/Google.Apis.Core.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Google.Apis.Core.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.0/Google.Apis.Core.dll": {}
         }
       },
       "Google.Cloud.Firestore/3.0.0": {
@@ -116,14 +92,10 @@
           "System.Linq.Async": "6.0.1"
         },
         "compile": {
-          "lib/netstandard2.1/Google.Cloud.Firestore.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.1/Google.Cloud.Firestore.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.1/Google.Cloud.Firestore.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.1/Google.Cloud.Firestore.dll": {}
         }
       },
       "Google.Cloud.Firestore.V1/3.0.0": {
@@ -134,14 +106,10 @@
           "Google.LongRunning": "3.0.0"
         },
         "compile": {
-          "lib/netstandard2.1/Google.Cloud.Firestore.V1.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.1/Google.Cloud.Firestore.V1.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.1/Google.Cloud.Firestore.V1.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.1/Google.Cloud.Firestore.V1.dll": {}
         }
       },
       "Google.Cloud.Location/2.0.0": {
@@ -150,14 +118,10 @@
           "Google.Api.Gax.Grpc": "[4.0.0, 5.0.0)"
         },
         "compile": {
-          "lib/netstandard2.1/Google.Cloud.Location.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.1/Google.Cloud.Location.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.1/Google.Cloud.Location.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.1/Google.Cloud.Location.dll": {}
         }
       },
       "Google.LongRunning/3.0.0": {
@@ -166,27 +130,19 @@
           "Google.Api.Gax.Grpc": "[4.0.0, 5.0.0)"
         },
         "compile": {
-          "lib/netstandard2.1/Google.LongRunning.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.1/Google.LongRunning.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.1/Google.LongRunning.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.1/Google.LongRunning.dll": {}
         }
       },
       "Google.Protobuf/3.21.0": {
         "type": "package",
         "compile": {
-          "lib/net5.0/Google.Protobuf.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/net5.0/Google.Protobuf.dll": {}
         },
         "runtime": {
-          "lib/net5.0/Google.Protobuf.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/net5.0/Google.Protobuf.dll": {}
         }
       },
       "Grpc.Auth/2.46.3": {
@@ -196,14 +152,10 @@
           "Grpc.Core.Api": "2.46.3"
         },
         "compile": {
-          "lib/netstandard2.0/Grpc.Auth.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.0/Grpc.Auth.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Grpc.Auth.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.0/Grpc.Auth.dll": {}
         }
       },
       "Grpc.Core.Api/2.46.3": {
@@ -212,14 +164,10 @@
           "System.Memory": "4.5.3"
         },
         "compile": {
-          "lib/netstandard2.1/Grpc.Core.Api.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.1/Grpc.Core.Api.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.1/Grpc.Core.Api.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.1/Grpc.Core.Api.dll": {}
         }
       },
       "Grpc.Net.Client/2.46.0": {
@@ -229,14 +177,10 @@
           "Microsoft.Extensions.Logging.Abstractions": "3.0.3"
         },
         "compile": {
-          "lib/net6.0/Grpc.Net.Client.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/net6.0/Grpc.Net.Client.dll": {}
         },
         "runtime": {
-          "lib/net6.0/Grpc.Net.Client.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/net6.0/Grpc.Net.Client.dll": {}
         }
       },
       "Grpc.Net.Common/2.46.0": {
@@ -245,27 +189,19 @@
           "Grpc.Core.Api": "2.46.1"
         },
         "compile": {
-          "lib/net6.0/Grpc.Net.Common.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/net6.0/Grpc.Net.Common.dll": {}
         },
         "runtime": {
-          "lib/net6.0/Grpc.Net.Common.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/net6.0/Grpc.Net.Common.dll": {}
         }
       },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
         "type": "package",
         "compile": {
-          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {}
         }
       },
       "Microsoft.Extensions.ApiDescription.Server/3.0.0": {
@@ -282,14 +218,10 @@
       "Microsoft.Extensions.DependencyInjection.Abstractions/6.0.0": {
         "type": "package",
         "compile": {
-          "lib/net6.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
         },
         "runtime": {
-          "lib/net6.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
         },
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
@@ -298,40 +230,28 @@
       "Microsoft.Extensions.Logging.Abstractions/3.0.3": {
         "type": "package",
         "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {}
         }
       },
       "Microsoft.OpenApi/1.2.3": {
         "type": "package",
         "compile": {
-          "lib/netstandard2.0/Microsoft.OpenApi.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.0/Microsoft.OpenApi.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Microsoft.OpenApi.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/netstandard2.0/Microsoft.OpenApi.dll": {}
         }
       },
       "Newtonsoft.Json/13.0.1": {
         "type": "package",
         "compile": {
-          "lib/netstandard2.0/Newtonsoft.Json.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Newtonsoft.Json.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
       "Swashbuckle.AspNetCore/6.2.3": {
@@ -352,14 +272,10 @@
           "Microsoft.OpenApi": "1.2.3"
         },
         "compile": {
-          "lib/net6.0/Swashbuckle.AspNetCore.Swagger.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/net6.0/Swashbuckle.AspNetCore.Swagger.dll": {}
         },
         "runtime": {
-          "lib/net6.0/Swashbuckle.AspNetCore.Swagger.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/net6.0/Swashbuckle.AspNetCore.Swagger.dll": {}
         },
         "frameworkReferences": [
           "Microsoft.AspNetCore.App"
@@ -371,27 +287,19 @@
           "Swashbuckle.AspNetCore.Swagger": "6.2.3"
         },
         "compile": {
-          "lib/net6.0/Swashbuckle.AspNetCore.SwaggerGen.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/net6.0/Swashbuckle.AspNetCore.SwaggerGen.dll": {}
         },
         "runtime": {
-          "lib/net6.0/Swashbuckle.AspNetCore.SwaggerGen.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/net6.0/Swashbuckle.AspNetCore.SwaggerGen.dll": {}
         }
       },
       "Swashbuckle.AspNetCore.SwaggerUI/6.2.3": {
         "type": "package",
         "compile": {
-          "lib/net6.0/Swashbuckle.AspNetCore.SwaggerUI.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/net6.0/Swashbuckle.AspNetCore.SwaggerUI.dll": {}
         },
         "runtime": {
-          "lib/net6.0/Swashbuckle.AspNetCore.SwaggerUI.dll": {
-            "related": ".pdb;.xml"
-          }
+          "lib/net6.0/Swashbuckle.AspNetCore.SwaggerUI.dll": {}
         },
         "frameworkReferences": [
           "Microsoft.AspNetCore.App"
@@ -403,14 +311,10 @@
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
         },
         "compile": {
-          "lib/net6.0/System.Collections.Immutable.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/System.Collections.Immutable.dll": {}
         },
         "runtime": {
-          "lib/net6.0/System.Collections.Immutable.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/System.Collections.Immutable.dll": {}
         },
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
@@ -422,14 +326,10 @@
           "Microsoft.Bcl.AsyncInterfaces": "6.0.0"
         },
         "compile": {
-          "ref/net6.0/System.Linq.Async.dll": {
-            "related": ".xml"
-          }
+          "ref/net6.0/System.Linq.Async.dll": {}
         },
         "runtime": {
-          "lib/net6.0/System.Linq.Async.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/System.Linq.Async.dll": {}
         }
       },
       "System.Memory/4.5.3": {
@@ -444,14 +344,10 @@
       "System.Runtime.CompilerServices.Unsafe/6.0.0": {
         "type": "package",
         "compile": {
-          "lib/net6.0/System.Runtime.CompilerServices.Unsafe.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/System.Runtime.CompilerServices.Unsafe.dll": {}
         },
         "runtime": {
-          "lib/net6.0/System.Runtime.CompilerServices.Unsafe.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/System.Runtime.CompilerServices.Unsafe.dll": {}
         },
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
@@ -1101,23 +997,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ברוכסון\\.nuget\\packages\\": {},
+    "C:\\Users\\Yan\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ברוכסון\\OneDrive\\מסמכים\\יהונתן\\אוניברסיטה עבודות\\הנדסת תוכנה\\Tiktik\\TiktikHttpServer.csproj",
+      "projectUniqueName": "C:\\Users\\Yan\\Desktop\\Tiktik\\TiktikHttpServer\\TiktikHttpServer.csproj",
       "projectName": "TiktikHttpServer",
-      "projectPath": "C:\\Users\\ברוכסון\\OneDrive\\מסמכים\\יהונתן\\אוניברסיטה עבודות\\הנדסת תוכנה\\Tiktik\\TiktikHttpServer.csproj",
-      "packagesPath": "C:\\Users\\ברוכסון\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ברוכסון\\OneDrive\\מסמכים\\יהונתן\\אוניברסיטה עבודות\\הנדסת תוכנה\\Tiktik\\obj\\",
+      "projectPath": "C:\\Users\\Yan\\Desktop\\Tiktik\\TiktikHttpServer\\TiktikHttpServer.csproj",
+      "packagesPath": "C:\\Users\\Yan\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Yan\\Desktop\\Tiktik\\TiktikHttpServer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\ברוכסון\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Yan\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -1159,8 +1055,7 @@
           "net47",
           "net471",
           "net472",
-          "net48",
-          "net481"
+          "net48"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -1172,7 +1067,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   }

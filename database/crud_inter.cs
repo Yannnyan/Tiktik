@@ -68,11 +68,11 @@ public interface crud_inter{
     //if id = -1 lesson will get smallest free id
     public Task<bool> add_lesson(Lesson l);
 
-    public Task<bool> add_lesson(int id, int TheacherId, int StudentId, string date, string comment);
+    public Task<bool> add_lesson(int id, int TheacherId, int StudentId, DateTime date, string comment);
 
     public Task<bool> change_comment_byid(int id, String comment);
 
-    public Task<bool> change_date_byid(int id, string newDate);
+    public Task<bool> change_date_byid(int id, DateTime newDate);
 
     public Task<Lesson> get_lesson_byid(int LessonId);
 
@@ -109,9 +109,11 @@ public interface crud_inter{
     // update the object with the id-- id,
     // to be T
     // if T is student, update the student with that id to be T
-    public void Update(Object T, int id);
+    public void Update(object T, int id);
     // delete the object T from the database
    public Task<bool> Delete(Object T);
+    public Task<LearnsWith> getLearnsWith(int StudentId);
+    public Task<ArrayList> getStudentsByTeacher(int teacherId);
 
 
 
