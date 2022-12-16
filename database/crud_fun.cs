@@ -49,7 +49,6 @@ public class crud_fun{
         lesson.StudentId = (int)(long) dic["studentid"];
         lesson.TeacherId = (int)(long) dic["teacherid"];
         return lesson;
-
     }
 
     public static void sort(int[] arr){
