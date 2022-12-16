@@ -605,10 +605,10 @@ public class CRUD : crud_inter{
         Dictionary<string, object> newlesson = new Dictionary<string, object>
         {
             { "id", l.Id },
-            { "TeacherId", l.TeacherId },
-            { "StudentId", l.StudentId },
-            { "Date", l.Date },   
-            { "Comment", l.Comment }
+            { "teacherId", l.TeacherId },
+            { "studentId", l.StudentId },
+            { "date", l.Date },   
+            { "comment", l.Comment }
         };
 
 
@@ -621,7 +621,7 @@ public class CRUD : crud_inter{
 
     }
 
-    public async Task<bool> add_lesson(int id, int TheacherId, int StudentId, Timestamp date, string comment){
+    public async Task<bool> add_lesson(int id, int TheacherId, int StudentId, string date, string comment){
         if(id == -1){
             int new_id = free_id(Lessons_collection).Result;
             id = new_id;
@@ -640,10 +640,10 @@ public class CRUD : crud_inter{
         Dictionary<string, object> newlessonDic = new Dictionary<string, object>
         {
             { "id", newLesson.Id },
-            { "TeacherId", newLesson.TeacherId },
-            { "StudentId", newLesson.StudentId },
-            { "Date", newLesson.Date },   
-            { "Comment", newLesson.Comment }
+            { "teacherId", newLesson.TeacherId },
+            { "studentId", newLesson.StudentId },
+            { "cate", newLesson.Date },   
+            { "comment", newLesson.Comment }
         };
 
 
@@ -661,13 +661,13 @@ public class CRUD : crud_inter{
             return false;
         }else{
             DocumentReference docRef = db.Collection(Lessons_collection).Document(id.ToString());
-            await docRef.UpdateAsync("Comment", comment);
+            await docRef.UpdateAsync("comment", comment);
             Console.WriteLine("changed the comment.");
             return true;
         }
     }
 
-    public async Task<bool> change_date_byid(int Lid, Timestamp newDate)
+    public async Task<bool> change_date_byid(int Lid, string newDate)
     {
         if(!id_exist(Lid, Lessons_collection).Result){
             Console.WriteLine("lesson doesnt exist");
@@ -692,11 +692,11 @@ public class CRUD : crud_inter{
             Dictionary<string, object> lessonDic = snapshot.ToDictionary();
             
             //lessonDic.TryGetValue("comment", out comment);
-            lesson.Comment = (string) lessonDic["Comment"];
-            lesson.Date = (Timestamp) lessonDic["Date"];
+            lesson.Comment = (string) lessonDic["comment"];
+            lesson.Date = (string) lessonDic["date"];
             lesson.Id = (int)(long) lessonDic["id"];
-            lesson.StudentId = (int)(long) lessonDic["StudentId"];
-            lesson.TeacherId = (int)(long) lessonDic["TeacherId"];
+            lesson.StudentId = (int)(long) lessonDic["studentId"];
+            lesson.TeacherId = (int)(long) lessonDic["teacherId"];
             return lesson;
 
 

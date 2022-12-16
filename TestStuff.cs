@@ -19,18 +19,18 @@ public class testStuff
         int counter = 1;
         Lesson l = new Lesson(-1, counter, 1, date, "this lesson comment");
 
-        // for(int i = 1; i<10; i++){
-        //     s.Id = -1;
-        //     l.Id = -1;
-        //     t.Id = -1;
-        //     await DB.add(s);
-        //     await DB.add(t);
-        //     await DB.add(l);
+        for(int i = 1; i<10; i++){
+            s.Id = -1;
+            l.Id = -1;
+            t.Id = -1;
+            await DB.add(s);
+            await DB.add(t);
+            await DB.add(l);
 
-        //     if(i % 3 == 0){
-        //         counter++;
-        //     }
-        // }
+            if(i % 3 == 0){
+                counter++;
+            }
+        }
     
         Console.WriteLine("free space in: Student: {0}, Lessons: {1}, Teacher: {2}", await DB.free_id(DB.Students_collection), await DB.free_id(DB.Lessons_collection), await DB.free_id(DB.Teachers_collection));
 
@@ -41,7 +41,7 @@ public class testStuff
         Console.WriteLine(lesson.StudentId);
         Console.WriteLine(lesson.TeacherId);
 
-        Student student = await DB.get_student_byid(2);
+        Student student = await DB.get_student_byid(10);
         Console.WriteLine("Student with id = 2 : ");
         Console.WriteLine(student.Id);
         Console.WriteLine(student.Email);
@@ -57,9 +57,9 @@ public class testStuff
        int result = await DB.free_id(DB.Teachers_collection);
        Console.WriteLine("free id in Student collection {0}", result);
 
-    // await DB.DeleteCollection(DB.Lessons_collection,50);
-    // await DB.DeleteCollection(DB.Students_collection, 50);
-    // await DB.DeleteCollection(DB.Teachers_collection, 50);
+    await DB.DeleteCollection(DB.Lessons_collection,50);
+    await DB.DeleteCollection(DB.Students_collection, 50);
+    await DB.DeleteCollection(DB.Teachers_collection, 50);
 
 
 
