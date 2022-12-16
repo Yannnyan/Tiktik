@@ -7,12 +7,15 @@ public class Lesson
 {
     [FirestoreProperty("id")]
     public int Id{get;set;}
+
     [FirestoreProperty("teacherid")]
     public int TeacherId{get;set;}
+
     [FirestoreProperty("studentid")]
     public int StudentId{get;set;}
+    
     private DateTime date;
-    [FirestoreProperty("date")]
+   [FirestoreProperty("date")]
     public DateTime Date
     {
         get{

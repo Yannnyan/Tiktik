@@ -10,9 +10,9 @@ using TiktikHttpServer.Models;
 public class CRUD : crud_inter{
     FirestoreDb db;
     public static string Students_collection = "Student";
-public static string Teachers_collection = "Teacher";
-public static string Lessons_collection = "Lessons";
-public static string LearnsWith_collection = "LearnsWith";
+    public static string Teachers_collection = "Teacher";
+    public static string Lessons_collection = "Lessons";
+    public static string LearnsWith_collection = "LearnsWith";
 
     public CRUD(){
         //System.Environment.SetEnvironmentVariable("C:/Users/ברוכסון/OneDrive/מסמכים/יהונתן/אוניברסיטה עבודות/הנדסת תוכנה/Tiktik/database\tiktikdb-bfa5d-70273e817eb9 (1).json");
@@ -60,6 +60,8 @@ public static string LearnsWith_collection = "LearnsWith";
         QuerySnapshot ds = await lessonsref.GetSnapshotAsync();
 
         ArrayList arry = new ArrayList();
+
+        
         foreach(DocumentSnapshot doc in ds.Documents)
         {
             if(T is Student)
@@ -73,6 +75,7 @@ public static string LearnsWith_collection = "LearnsWith";
         }
         return arry;
 
+        //thrwt1548 
         // foreach (DocumentSnapshot documentSnapshot in ds.Documents){
         //     arry.Add(crud_fun.from_dictionary_to_Object(documentSnapshot.ToDictionary(), collection_name));
         // }
@@ -213,7 +216,7 @@ public static string LearnsWith_collection = "LearnsWith";
 
             DocumentReference docRef = db.Collection(collection_name).Document(id.ToString());
             WriteResult writeResult = await docRef.DeleteAsync();
-            Console.WriteLine(writeResult.UpdateTime);
+            //Console.WriteLine(writeResult.UpdateTime);
             Console.WriteLine("deleted data from {0} collection.", collection_name);
             return true;
         }
@@ -356,7 +359,7 @@ public static string LearnsWith_collection = "LearnsWith";
 
             DocumentReference docRef = db.Collection(Students_collection).Document(id.ToString());
             WriteResult writeResult = await docRef.DeleteAsync();
-            Console.WriteLine(writeResult.UpdateTime);
+            //Console.WriteLine(writeResult.UpdateTime);
             Console.WriteLine("deleted data from Student collection.");
             return true;
         }
@@ -606,7 +609,7 @@ public static string LearnsWith_collection = "LearnsWith";
 
 
         WriteResult writeResult = await docRef.SetAsync(newlesson);
-        Console.WriteLine(writeResult.UpdateTime);
+        //Console.WriteLine(writeResult.UpdateTime);
         Console.WriteLine("Added data to the Lessons collection.");
 
         return true;
@@ -614,7 +617,7 @@ public static string LearnsWith_collection = "LearnsWith";
 
     }
 
-    public async Task<bool> add_lesson(int id, int TheacherId, int StudentId, string date, string comment){
+    public async Task<bool> add_lesson(int id, int TheacherId, int StudentId, DateTime date, string comment){
         if(id == -1){
             int new_id = free_id(Lessons_collection).Result;
             id = new_id;
@@ -627,7 +630,9 @@ public static string LearnsWith_collection = "LearnsWith";
         }
 
         Lesson newLesson = new Lesson(id, TheacherId, StudentId, date, comment);
-    
+
+        string date_string = date.ToString();
+
         DocumentReference docRef = db.Collection(Lessons_collection).Document(id.ToString());
 
         Dictionary<string, object> newlessonDic = new Dictionary<string, object>
@@ -635,13 +640,13 @@ public static string LearnsWith_collection = "LearnsWith";
             { "id", newLesson.Id },
             { "teacherid", newLesson.TeacherId },
             { "studentid", newLesson.StudentId },
-            { "date", newLesson.Date },   
+            { "date", date_string },   
             { "comment", newLesson.Comment }
         };
 
 
         WriteResult writeResult = await docRef.SetAsync(newlessonDic);
-        Console.WriteLine(writeResult.UpdateTime);
+        //Console.WriteLine(writeResult.UpdateTime);
         Console.WriteLine("Added data to the Lessons collection.");
 
         return true;
@@ -660,14 +665,15 @@ public static string LearnsWith_collection = "LearnsWith";
         }
     }
 
-    public async Task<bool> change_date_byid(int Lid, string newDate)
+    public async Task<bool> change_date_byid(int Lid, DateTime newDate)
     {
         if(!id_exist(Lid, Lessons_collection).Result){
             Console.WriteLine("lesson doesnt exist");
             return false;
         }else{
+            string date_string = newDate.ToString();
             DocumentReference docRef = db.Collection(Lessons_collection).Document(Lid.ToString());
-            await docRef.UpdateAsync("Date", newDate);
+            await docRef.UpdateAsync("Date", date_string);
             Console.WriteLine("changed the Date.");
             return true;
         }
