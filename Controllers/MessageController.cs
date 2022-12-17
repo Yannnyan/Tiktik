@@ -38,7 +38,9 @@ public class MessageController : ControllerBase
             }
             else{
                 std = StudentService.Get(user.Email);
-                if (std == null || !std.Password.Equals(user.Password))
+                if(std is null || std.Password is null)
+                    return NotFound();
+                if (!std.Password.Equals(user.Password))
                     return NotFound();
                 LogService.LogIn(std);
                 return new Response_Student(std);
