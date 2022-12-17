@@ -11,18 +11,8 @@ public class Lesson
     public int TeacherId{get;set;}
     [FirestoreProperty("studentid")]
     public int StudentId{get;set;}
-    private DateTime date;
     [FirestoreProperty("date")]
-    public DateTime Date
-    {
-        get{
-           return date; 
-        }
-        set
-        {
-            date = getDateFromVal(value);
-        }
-    }
+    public DateTime Date{get;set;}
     [FirestoreProperty("comment")]
     public String? Comment
     {get;set;}

@@ -47,6 +47,7 @@ public class LessonService
         return lessons;
     }
     public static Lesson? GetById(int lessonId) => Lessons.FirstOrDefault(l => l.Id == lessonId);
+
     public static void Add(Lesson lesson)
     {
         lesson.Id = nextId++;

@@ -52,7 +52,7 @@ public class LessonController : ControllerBase
         return NoContent();
     }
     // delete
-    [HttpDelete]
+    [HttpDelete("{lessonId}")]
     public ActionResult Delete(int lessonId)
     {
         if (LessonService.GetById(lessonId) is null)
