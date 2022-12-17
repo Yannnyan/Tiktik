@@ -50,7 +50,9 @@ public class StudentController : ControllerBase
     {
         if(student.Email is null || student.Name is null || student.Password is null||
                                             student.Phone is null)
-            return BadRequest();
+            return BadRequest("Email or name or password or Phone is null");
+        else if(StudentService.Get(student.Email) is not null)
+            return BadRequest("Email already exists");
         StudentService.Add(student);
         return NoContent();
     }

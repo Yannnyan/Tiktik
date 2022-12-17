@@ -63,7 +63,9 @@ public class TeacherController : ControllerBase
     {
         if(teach.Email is null || teach.Name is null || teach.Password is null ||
         teach.Phone is null)
-            return BadRequest();
+            return BadRequest("Email or name or password or Phone is null");
+        else if(TeacherService.Get(teach.Email) is not null)
+            return BadRequest("Email already exists");
         TeacherService.Add(teach);
         return NoContent();
     }

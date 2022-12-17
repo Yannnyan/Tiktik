@@ -17,11 +17,8 @@ public class LessonService
         //     new Lesson {Id = 2, TeacherId = 2, StudentId = 2, Comment = "Ariel, Rehov Hatziyonut."}
         // };
     }
-    public static List<Lesson> GetAll()
-    {
-        // Console.WriteLine(Lessons[0].Id);
-        return Lessons;
-    }
+    public static List<Lesson> GetAll() => Lessons;
+    
     public static List<Lesson> GetByStudent(int studentId)
     {
         List<Lesson> lessons = new List<Lesson>();

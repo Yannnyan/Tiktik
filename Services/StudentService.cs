@@ -12,17 +12,7 @@ public class StudentService
     static StudentService()
     {
         Students = CrudService.crud.GetAll(new Student()).Result.Cast<Student>().ToList();
-        foreach(Student student in Students)
-        {
-            Console.Out.WriteLine(student.ToString());
-        }
-        // Console.Out.WriteLine(Get("idan@gmail.com").ToString());
         nextId = Students.Max(std => std.Id) + 1;
-        // Students = new List<Student>
-        // {
-        //     new Student {Id = 1, Name = "Moshe cohen", Email = "mosheCohen@gmail.com", Password = "123456", Phone = "0001234567"}
-        //     , new Student {Id = 2, Name = "Yossi zaguri", Email = "YossiZaguri@gmail.com", Password = "321654", Phone = "1231231234"}
-        // };
         StudentToTeacher = new Dictionary<int, int?>();
         update_StudentToTeacher();
     }

@@ -30,13 +30,15 @@ public class MessageController : ControllerBase
             {
                 teach = TeacherService.Get(user.Email);
                 if (teach is null)
-                    return NotFound();
+                    return NotFound("Cannot find email");
+                else if(!teach.Password.Equals(user.Password))
+                    return NotFound("Password incorrect");
                 LogService.LogIn(teach);
                 return new Response_Teacher(teach);
             }
             else{
                 std = StudentService.Get(user.Email);
-                if (std == null)
+                if (std == null || !std.Password.Equals(user.Password))
                     return NotFound();
                 LogService.LogIn(std);
                 return new Response_Student(std);
