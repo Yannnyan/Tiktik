@@ -51,8 +51,7 @@ public class crud_fun{
         return lesson;
     }
 
-    public static void sort(int[] arr)
-    {
+    public static void sort(int[] arr){
         int n = arr.Length;
         for (int i = 1; i < n; ++i) {
             int key = arr[i];
@@ -69,4 +68,12 @@ public class crud_fun{
             arr[j + 1] = key;
         }
     }
+
+    // public static void from_string_to_DateTime(string Sdate){
+    //     DateTime Ddate = new DateTime();
+
+    //     int year = Sdate.Split();
+
+        
+    // }
 }
