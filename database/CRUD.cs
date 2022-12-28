@@ -610,9 +610,9 @@ public class CRUD : crud_inter{
 
         await db.Collection(Lessons_collection).Document(l.Id.ToString()).SetAsync(docData);
 
-        WriteResult writeResult = await docRef.SetAsync(newlesson);
+        //WriteResult writeResult = await docRef.SetAsync(newlesson);
         //Console.WriteLine(writeResult.UpdateTime);
-        Console.WriteLine("Added data to the Lessons collection.");
+        //Console.WriteLine("Added data to the Lessons collection.");
 
         return true;
         // DocumentReference docRef = db.Collection(Lessons_collection).Document(l.Id.ToString());
