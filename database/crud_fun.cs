@@ -12,8 +12,12 @@ public class crud_fun{
             return from_dictionary_to_student(dic);
         if(collection_name.Equals(CRUD.Teachers_collection))
             return from_dictionary_to_theacher(dic); 
-        else 
+        if(collection_name.Equals(CRUD.Lessons_collection))
             return from_dictionary_to_lesson(dic);
+        else
+            return from_dictionary_to_Schedule(dic);
+        
+            
     }
 
 
@@ -51,6 +55,35 @@ public class crud_fun{
         return lesson;
     }
 
+    public static Schedule from_dictionary_to_Schedule(Dictionary<string, object> dic){
+        Lesson lesson = new Lesson();
+
+        Schedule schedule = new Schedule();
+
+        schedule.Id = (int)(long) dic["id"];
+
+        DateTime[] start = new DateTime[7];
+        List<Object> list = (List<Object>) dic["start"]; 
+        int i = 0;
+        foreach(string t in list){
+            start[i] = DateTime.Parse((string)t);
+            i++;
+        }
+
+        schedule.StartD = start;
+
+        DateTime[] finish = new DateTime[7];
+        list = (List<Object>) dic["finish"];
+        i = 0;
+        foreach(string t in list){
+            finish[i] = DateTime.Parse((string)t);
+            i++;
+        }
+
+        schedule.FinishD = finish;
+        return schedule;
+    }
+
     public static void sort(int[] arr){
         int n = arr.Length;
         for (int i = 1; i < n; ++i) {
@@ -68,12 +101,5 @@ public class crud_fun{
             arr[j + 1] = key;
         }
     }
-
-    // public static void from_string_to_DateTime(string Sdate){
-    //     DateTime Ddate = new DateTime();
-
-    //     int year = Sdate.Split();
-
-        
-    // }
+    
 }

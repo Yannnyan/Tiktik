@@ -12,7 +12,7 @@ public class CRUD : crud_inter{
     public static string Teachers_collection = "Teacher";
     public static string Lessons_collection = "Lessons";
     public static string LearnsWith_collection = "LearnsWith";
-
+    public static string Schedule_collection = "Schedule";
     public CRUD(){
         //System.Environment.SetEnvironmentVariable("C:/Users/ברוכסון/OneDrive/מסמכים/יהונתן/אוניברסיטה עבודות/הנדסת תוכנה/Tiktik/database\tiktikdb-bfa5d-70273e817eb9 (1).json");
          System.Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "tiktikdb-bfa5d-70273e817eb9 (1).json");
@@ -33,8 +33,48 @@ public class CRUD : crud_inter{
         else if(T is LearnsWith)
         {
             return await add_LearnsWith((LearnsWith) T);
+        }else if(T is Schedule){
+            return await add_Schedule((Schedule)T);
         }
         return false;
+    }
+
+    public async Task<bool> add_Schedule(Schedule days){
+         if(days.Id == -1){
+            int new_id = free_id(Schedule_collection).Result;
+            days.Id = new_id;
+        }else if(days.Id <= 0){
+            Console.WriteLine("incorrect id = {0} input (non-positive)", days.Id);
+            return false;
+        }else if(id_exist(days.Id, Schedule_collection).Result){
+            Console.WriteLine("student id = {0} already exist", days.Id);
+            return false;
+        }
+        
+        DocumentReference scheduleref = db.Collection(Schedule_collection).Document(days.Id.ToString());
+        //need to improve (dont have to create new dic each time)
+        Dictionary<string, object> newdays = new Dictionary<string, object>
+        {
+            { "id", days.Id }
+        }; 
+
+        ArrayList start_finish = new ArrayList();
+        foreach(DateTime s in days.StartD){
+            start_finish.Add(s.ToString("s"));
+        }
+        newdays.Add("start", start_finish);
+        start_finish.Clear();
+        foreach(DateTime f in days.FinishD){
+            start_finish.Add(f.ToString("s"));
+        }
+        newdays.Add("finish", start_finish);
+
+
+        WriteResult writeResult = await scheduleref.SetAsync(newdays);
+        //Console.WriteLine(writeResult.UpdateTime);
+        Console.WriteLine("Added data to the Schedule collection.");
+
+        return true;
     }
 
     public async Task<ArrayList> GetAll(Object T){ 
@@ -50,6 +90,8 @@ public class CRUD : crud_inter{
         else if(T is LearnsWith)
         {
             collection_name = LearnsWith_collection;
+        }else if(T is Schedule){
+            collection_name = Schedule_collection;
         }
         else
         {
@@ -74,6 +116,8 @@ public class CRUD : crud_inter{
                 arry.Add(crud_fun.from_dictionary_to_Object(doc.ToDictionary(), collection_name));
             else if(T is LearnsWith)
                 arry.Add(doc.ConvertTo<LearnsWith>());
+            else if(T is Schedule)
+                arry.Add(crud_fun.from_dictionary_to_Object(doc.ToDictionary(), collection_name));
         }
         return arry;
 
