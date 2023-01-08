@@ -39,7 +39,7 @@ public class testStuff
         // }
 
         //await DB.add(st3);
-        DateTime t = new DateTime(DateTime.Now.Year,DateTime.Now.Month,DateTime.Now.Day,13,02,0,0);
+        DateTime t = new DateTime(DateTime.Now.Year,DateTime.Now.Month,DateTime.Now.Day,12,11,0,0);
         DateTime[] start ={t, t, t, t, t, t, t};
         DateTime[] finish ={t, t, t, t, t, t, t};
         Schedule s = new Schedule(start, finish, -1);

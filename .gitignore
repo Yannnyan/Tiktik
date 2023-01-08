@@ -2,4 +2,4 @@
 bin/
 publish/
 toDoList.txt
-obj/
+obj
