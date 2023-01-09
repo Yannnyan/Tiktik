@@ -517,24 +517,15 @@ public class CRUD : crud_inter{
         DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
 
         return snapshot.ConvertTo<Teacher>();
-
-        // Teacher t = new Teacher();
-
-        // if(snapshot.Exists){
-        //     Dictionary<string, object> lessonDic = snapshot.ToDictionary();
-            
-        //     t.Email = (string) lessonDic["email"];
-        //     t.Name= (string) lessonDic["name"];
-        //     t.Password = (string) lessonDic["password"];
-        //     t.Phone = (string) lessonDic["phone"];
-        //     t.Id= (int)(long) lessonDic["id"];
-        //     return t;
-
-
-        // }else{
-        //     Console.WriteLine("there is no Teacher with id = {0}", id);
-        //     return t;
-        // }
+    }
+    public async Task<bool> change_schedule_byid(int id, Schedule new_schedule)
+    {
+        if(!id_exist(id , Teachers_collection).Result)
+            return false;
+        DocumentReference docRef = db.Collection(Teachers_collection).Document(id.ToString());
+        await docRef.UpdateAsync("StartTimes", new_schedule.Starts);
+        await docRef.UpdateAsync("EndTimes", new_schedule.Ends);
+        return true;
     }
 
     public async Task<bool> change_t_phone_byid(string phone, int id){
@@ -592,16 +583,6 @@ public class CRUD : crud_inter{
 
     public async Task<bool> add_lesson(Lesson l)
     {
-        // if(l.Id == -1){
-        //     int new_id = free_id(Lessons_collection).Result;
-        //     l.Id = new_id;
-        // }else if(l.Id <= 0){
-        //     Console.WriteLine("incorrect id = {0} input (non-positive)", l.Id);
-        //     return false;
-        // }else if(id_exist(l.Id, Lessons_collection).Result){
-        //     Console.WriteLine("Lesson id = {0} already exist", l.Id);
-        //     return false;
-        // }
         if(l.Comment is null)
             return false;
         Dictionary<string, object> docData = new Dictionary<string, object>
@@ -614,29 +595,7 @@ public class CRUD : crud_inter{
         };
 
         await db.Collection(Lessons_collection).Document(l.Id.ToString()).SetAsync(docData);
-
-        //WriteResult writeResult = await docRef.SetAsync(newlesson);
-        //Console.WriteLine(writeResult.UpdateTime);
-        //Console.WriteLine("Added data to the Lessons collection.");
-
         return true;
-        // DocumentReference docRef = db.Collection(Lessons_collection).Document(l.Id.ToString());
-
-        // Dictionary<string, object> newlesson = new Dictionary<string, object>
-        // {
-        //     { "id", l.Id },
-        //     { "teacherid", l.TeacherId },
-        //     { "studentid", l.StudentId },
-        //     { "date", l.Date },   
-        //     { "comment", l.Comment }
-        // };
-
-
-        // WriteResult writeResult = await docRef.SetAsync(newlesson);
-        // Console.WriteLine(writeResult.UpdateTime);
-        // Console.WriteLine("Added data to the Lessons collection.");
-
-        // return true;
         
 
     }
@@ -766,7 +725,6 @@ public class CRUD : crud_inter{
 
         return arry;
     }
-        
     public void Update(object T, int id)
     {
         throw new NotImplementedException();

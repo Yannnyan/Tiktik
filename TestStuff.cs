@@ -33,9 +33,31 @@ public class testStuff
         //     await DB.add(lesson);
         // }
 
-        Teacher t1 = new Teacher("1919191919", "idan philosoph", "123123", "idanPhilo@gmail.com", -1);
+        // Teacher t1 = new Teacher("1919191919", "idan philosoph", "123123", "idanPhilo@gmail.com", -1);
         CRUD DB = new CRUD();
-        // await DB.add_teacher(t1); 
+        // await DB.add_teacher(t1);
+        List<string?> new_start_times = new List<string?>();
+        List<string?> new_end_times = new List<string?>();
+        new_start_times.Add(new TimeOnly(1, 0).ToString());
+        new_start_times.Add(new TimeOnly(2, 0).ToString());
+        new_start_times.Add(new TimeOnly(3, 0).ToString());
+        new_start_times.Add(new TimeOnly(4, 0).ToString());
+        new_start_times.Add(new TimeOnly(5, 0).ToString());
+        new_start_times.Add(new TimeOnly(6, 0).ToString());
+        new_start_times.Add(new TimeOnly(7, 0).ToString());
+
+        new_end_times.Add(new TimeOnly(1, 0).ToString());
+        new_end_times.Add(new TimeOnly(2, 0).ToString());
+        new_end_times.Add(new TimeOnly(3, 0).ToString());
+        new_end_times.Add(new TimeOnly(4, 0).ToString());
+        new_end_times.Add(new TimeOnly(5, 0).ToString());
+        new_end_times.Add(new TimeOnly(6, 0).ToString());
+        new_end_times.Add(new TimeOnly(7, 0).ToString());
+        Schedule schedule = new Schedule();
+        schedule.Id = 0;
+        schedule.Starts = new_start_times;
+        schedule.Ends = new_end_times;
+        await DB.change_schedule_byid(4, schedule);
         string? h = DB.get_teacher_byid(4).Result.ToString();
         Console.WriteLine(h);   
     }
