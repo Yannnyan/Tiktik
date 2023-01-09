@@ -15,8 +15,9 @@ public class Teacher
     public String Name{get; set;}
     [FirestoreProperty("phone")]
     public String Phone{get; set;}
-
+    [FirestoreProperty("StartTimes")]
     public List<string> StartTimes{get;set;}
+    [FirestoreProperty("EndTimes")]
     public List<string> EndTimes{get;set;}
 
     private int DEFAULT_START = 7;
@@ -50,6 +51,12 @@ public class Teacher
             StartTimes.Add(new TimeOnly(DEFAULT_START,0).ToString());
             EndTimes.Add(new TimeOnly(DEFAULT_END, 0).ToString());
         }
+    }
+    
+    public override string ToString()
+    {
+        return Id + " " +  Password + " " + Email + " " + Name + " " + Phone + " " + 
+        String.Join(",", StartTimes.ToArray()) + " " +  String.Join(",", EndTimes.ToArray()) ;
     }
 }
 

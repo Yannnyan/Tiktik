@@ -41,17 +41,17 @@ public interface crud_inter{
 
     public Task<bool> change_s_pass_byid(string pass, int id);
 
-    //-----------------------------------theacher: add, change, get, delete
+    //-----------------------------------teacher: add, change, get, delete
 
     //creates and adds Teacher object to the Teacher Document. on seccess -> true, on failure -> false
     //If id is initialized to -1 the Teacher will be given a free id value
     //id should be -1 or id > 0
-    public Task<bool> add_theacher(string phone, string name, string pass, string email, int id);
+    public Task<bool> add_teacher(string phone, string name, string pass, string email, int id);
 
     //creates and adds Teacher object to the Teacher Document. on seccess -> true, on failure -> false
     //If id is initialized to -1 the Teacher will be given a free id value
     //t.id should be -1 or t.id > 0
-    public Task<bool> add_theacher(Teacher t);
+    public Task<bool> add_teacher(Teacher t);
 
     public Task<bool> change_t_phone_byid(string phone, int id);
 
@@ -68,7 +68,7 @@ public interface crud_inter{
     //if id = -1 lesson will get smallest free id
     public Task<bool> add_lesson(Lesson l);
 
-    public Task<bool> add_lesson(int id, int TheacherId, int StudentId, DateTime date, string comment);
+    public Task<bool> add_lesson(int id, int teacherId, int StudentId, DateTime date, string comment);
 
     public Task<bool> change_comment_byid(int id, String comment);
 
@@ -76,7 +76,7 @@ public interface crud_inter{
 
     public Task<Lesson> get_lesson_byid(int LessonId);
 
-    public Task<ArrayList> get_my_lessons_as_theacher(int Lid);
+    public Task<ArrayList> get_my_lessons_as_teacher(int Lid);
 
     public Task<ArrayList> get_my_lessons_as_student(int Lid);
        

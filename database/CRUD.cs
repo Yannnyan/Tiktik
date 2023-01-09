@@ -12,7 +12,7 @@ public class CRUD : crud_inter{
     public static string Teachers_collection = "Teacher";
     public static string Lessons_collection = "Lessons";
     public static string LearnsWith_collection = "LearnsWith";
-
+    public static string Schedule_collection = "Schedule";
     public CRUD(){
         //System.Environment.SetEnvironmentVariable("C:/Users/ברוכסון/OneDrive/מסמכים/יהונתן/אוניברסיטה עבודות/הנדסת תוכנה/Tiktik/database\tiktikdb-bfa5d-70273e817eb9 (1).json");
          System.Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "tiktikdb-bfa5d-70273e817eb9 (1).json");
@@ -26,7 +26,7 @@ public class CRUD : crud_inter{
         if(T is Student){
             return await add_student((Student)T);
         }else if(T is Teacher){
-            return await add_theacher((Teacher)T);
+            return await add_teacher((Teacher)T);
         }else if(T is Lesson){
             return await add_lesson((Lesson)T);
         }
@@ -36,6 +36,7 @@ public class CRUD : crud_inter{
         }
         return false;
     }
+
 
     public async Task<ArrayList> GetAll(Object T){ 
         string collection_name;
@@ -431,11 +432,11 @@ public class CRUD : crud_inter{
 
     }
 
-    //----------------------------------------theacher
+    //----------------------------------------teacher
 
     //creates and adds Teacher object to the Teacher Document. on seccess -> true, on failure -> false
     //If id is initialized to -1 the Teacher will be given a free id value
-    public async Task<bool> add_theacher(string phone, string name, string pass, string email, int id){
+    public async Task<bool> add_teacher(string phone, string name, string pass, string email, int id){
 
         if(id == -1){
             int new_id = free_id(Teachers_collection).Result;
@@ -472,7 +473,7 @@ public class CRUD : crud_inter{
 
     //creates and adds Teacher object to the Teacher Document. on seccess -> true, on failure -> false
     //If id is initialized to -1 the Teacher will be given a free id value
-    public async Task<bool> add_theacher(Teacher t){
+    public async Task<bool> add_teacher(Teacher t){
 
         if(t.Id == -1){
             int new_id = free_id(Teachers_collection).Result;
@@ -493,7 +494,9 @@ public class CRUD : crud_inter{
             { "email", t.Email },
             { "password", t.Password },
             { "phone", t.Phone },
-            { "id", t.Id }
+            { "id", t.Id },
+            {"StartTimes", t.StartTimes},
+            {"EndTimes", t.EndTimes}
         };
 
 
@@ -507,29 +510,31 @@ public class CRUD : crud_inter{
         
     }
 
-    public async Task<Teacher> get_theacher_byid(int id)
+    public async Task<Teacher> get_teacher_byid(int id)
     {
         DocumentReference docRef = db.Collection(Teachers_collection).Document(id.ToString());
         
         DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
 
-        Teacher t = new Teacher();
+        return snapshot.ConvertTo<Teacher>();
 
-        if(snapshot.Exists){
-            Dictionary<string, object> lessonDic = snapshot.ToDictionary();
+        // Teacher t = new Teacher();
+
+        // if(snapshot.Exists){
+        //     Dictionary<string, object> lessonDic = snapshot.ToDictionary();
             
-            t.Email = (string) lessonDic["email"];
-            t.Name= (string) lessonDic["name"];
-            t.Password = (string) lessonDic["password"];
-            t.Phone = (string) lessonDic["phone"];
-            t.Id= (int)(long) lessonDic["id"];
-            return t;
+        //     t.Email = (string) lessonDic["email"];
+        //     t.Name= (string) lessonDic["name"];
+        //     t.Password = (string) lessonDic["password"];
+        //     t.Phone = (string) lessonDic["phone"];
+        //     t.Id= (int)(long) lessonDic["id"];
+        //     return t;
 
 
-        }else{
-            Console.WriteLine("there is no Teacher with id = {0}", id);
-            return t;
-        }
+        // }else{
+        //     Console.WriteLine("there is no Teacher with id = {0}", id);
+        //     return t;
+        // }
     }
 
     public async Task<bool> change_t_phone_byid(string phone, int id){
@@ -610,7 +615,7 @@ public class CRUD : crud_inter{
 
         await db.Collection(Lessons_collection).Document(l.Id.ToString()).SetAsync(docData);
 
-        // WriteResult writeResult = await docRef.SetAsync(newlesson);
+        //WriteResult writeResult = await docRef.SetAsync(newlesson);
         //Console.WriteLine(writeResult.UpdateTime);
         //Console.WriteLine("Added data to the Lessons collection.");
 
@@ -636,7 +641,7 @@ public class CRUD : crud_inter{
 
     }
 
-    public async Task<bool> add_lesson(int id, int TheacherId, int StudentId, DateTime date, string comment){
+    public async Task<bool> add_lesson(int id, int teacherId, int StudentId, DateTime date, string comment){
         if(id == -1){
             int new_id = free_id(Lessons_collection).Result;
             id = new_id;
@@ -648,7 +653,7 @@ public class CRUD : crud_inter{
             return false;
         }
 
-        Lesson newLesson = new Lesson(id, TheacherId, StudentId, date, comment);
+        Lesson newLesson = new Lesson(id, teacherId, StudentId, date, comment);
 
         string date_string = date.ToString();
 
@@ -724,7 +729,7 @@ public class CRUD : crud_inter{
         }
     }
 
-    public async Task<ArrayList> get_my_lessons_as_theacher(int Lid)
+    public async Task<ArrayList> get_my_lessons_as_teacher(int Lid)
     {
         CollectionReference lessonsref = db.Collection(Lessons_collection);
         
@@ -769,9 +774,8 @@ public class CRUD : crud_inter{
 
     public async Task<bool> add_LearnsWith(LearnsWith learnsWith)
     {
-        
-        DocumentReference learnsWithCollection = db.Collection(LearnsWith_collection).Document(learnsWith.id.ToString());
-        return await learnsWithCollection.SetAsync(learnsWith) != null;
+        CollectionReference learnsWithCollection = db.Collection(LearnsWith_collection);
+        return await learnsWithCollection.AddAsync(learnsWith) != null;
     }
     public async Task<bool> delete_LearnsWith(LearnsWith learnsWith)
     {
@@ -806,4 +810,3 @@ public class CRUD : crud_inter{
 
     
 }
-
