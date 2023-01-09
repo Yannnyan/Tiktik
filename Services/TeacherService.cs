@@ -13,12 +13,6 @@ public class TeacherService
         Teachers = CrudService.crud.GetAll(new Teacher()).Result.Cast<Teacher>().ToList();
         nextId = Teachers.Max(std => std.Id) + 1;
 
-        // Teachers = new List<Teacher>
-        // {
-        //     new Teacher {Id = 1, Name = "Haim levi", Email = "haimLevi@gmail.com", Password = "123456", Phone = "0001234567"}
-        //     , new Teacher {Id = 2, Name = "Yoni ben el", Email = "yoniBelEl@gmail.com", Password = "321654", Phone = "1231231234"}
-
-        // };
         TeacherToStudents = new Dictionary<int, List<int>>();
         updateTeacherToStudents();
     }
@@ -59,6 +53,27 @@ public class TeacherService
         Teachers.Add(Teacher);
         CrudService.crud.add(Teacher);
     }
+
+    public static void UpdateWorkTimes(int id, List<string?> start, List<string?> end)
+    {
+        Teacher? teacher = Get(id);
+        start.ForEach(t => Console.WriteLine(t is null ? "null" : t));
+        end.ForEach(t => Console.WriteLine(t is null ? "null" : t));
+        List<string> startValues = teacher.StartTimes;
+        List<string> endValues = teacher.EndTimes;
+        for(int i=0; i< start.Count; i++){
+            if(start[i] is not null)
+                startValues[i] = start[i];
+            if(end[i] is not null)
+                endValues[i] = end[i];
+        }
+        teacher.StartTimes = startValues;
+        teacher.EndTimes = endValues;
+        // TODO: Add database integration
+
+    }
+    public static List<string> GetStartTime(int id) => Get(id).StartTimes;
+    public static List<string> GetEndTime(int id) => Get(id).EndTimes;
 
     public static void Delete(int id)
     {

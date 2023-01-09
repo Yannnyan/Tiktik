@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Yan\\Desktop\\Tiktik\\TiktikHttpServer\\TiktikHttpServer.csproj": {}
+    "C:\\Users\\Yan\\Desktop\\Projects\\Tiktik\\TiktikHttpServer\\TiktikHttpServer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Yan\\Desktop\\Tiktik\\TiktikHttpServer\\TiktikHttpServer.csproj": {
+    "C:\\Users\\Yan\\Desktop\\Projects\\Tiktik\\TiktikHttpServer\\TiktikHttpServer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Yan\\Desktop\\Tiktik\\TiktikHttpServer\\TiktikHttpServer.csproj",
+        "projectUniqueName": "C:\\Users\\Yan\\Desktop\\Projects\\Tiktik\\TiktikHttpServer\\TiktikHttpServer.csproj",
         "projectName": "TiktikHttpServer",
-        "projectPath": "C:\\Users\\Yan\\Desktop\\Tiktik\\TiktikHttpServer\\TiktikHttpServer.csproj",
+        "projectPath": "C:\\Users\\Yan\\Desktop\\Projects\\Tiktik\\TiktikHttpServer\\TiktikHttpServer.csproj",
         "packagesPath": "C:\\Users\\Yan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Yan\\Desktop\\Tiktik\\TiktikHttpServer\\obj\\",
+        "outputPath": "C:\\Users\\Yan\\Desktop\\Projects\\Tiktik\\TiktikHttpServer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

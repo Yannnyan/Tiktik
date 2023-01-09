@@ -8,11 +8,14 @@ public class StudentService
     static List<Student> Students {get;}
     static Dictionary<int, int?> StudentToTeacher{get;}
     static int nextId;
+    static int nextConnectId;
 
     static StudentService()
     {
         Students = CrudService.crud.GetAll(new Student()).Result.Cast<Student>().ToList();
         nextId = Students.Max(std => std.Id) + 1;
+        List<LearnsWith> learnsWiths = CrudService.crud.GetAll(new LearnsWith()).Result.Cast<LearnsWith>().ToList();
+        nextConnectId = learnsWiths.Max(l => l.id) + 1;
         StudentToTeacher = new Dictionary<int, int?>();
         update_StudentToTeacher();
     }
@@ -28,6 +31,16 @@ public class StudentService
     public static void AddTeacherToStudent(int StudentId, int TeacherId)
     {
         StudentToTeacher[StudentId] = TeacherId;
+
+    }
+    // TODO: remember to change this to another service
+    public static void AddStudentToTeacherData(int studentId, int teacherId)
+    {
+        LearnsWith l = new LearnsWith();
+        l.studentid = studentId;
+        l.teacherid = teacherId;
+        l.id = nextConnectId ++;
+        CrudService.crud.add(l);
     }
     public static int? GetTeacherId(int StudentId)
     {

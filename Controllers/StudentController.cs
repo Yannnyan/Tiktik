@@ -65,7 +65,7 @@ public class StudentController : ControllerBase
             return BadRequest("Cannot get the Student's Id, or the Teacher Id's from the data");
         StudentService.AddTeacherToStudent(StudentId, TeacherId);
         TeacherService.AddStudentToTeacher(StudentId, TeacherId);
-        // TODO: Add Database integration here
+        StudentService.AddStudentToTeacherData(StudentId, TeacherId);
         return Ok();
     }
     [HttpDelete("DeleteTeacher/{StudentId}")]

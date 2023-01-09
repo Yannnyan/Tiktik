@@ -51,6 +51,9 @@ public class TeacherController : ControllerBase
         }
         return teachersByName;
     }
+
+    
+    
     // POST action
     [HttpPost]
     public ActionResult Post(Teacher Teacher)

@@ -769,8 +769,9 @@ public class CRUD : crud_inter{
 
     public async Task<bool> add_LearnsWith(LearnsWith learnsWith)
     {
-        CollectionReference learnsWithCollection = db.Collection(LearnsWith_collection);
-        return await learnsWithCollection.AddAsync(learnsWith) != null;
+        
+        DocumentReference learnsWithCollection = db.Collection(LearnsWith_collection).Document(learnsWith.id.ToString());
+        return await learnsWithCollection.SetAsync(learnsWith) != null;
     }
     public async Task<bool> delete_LearnsWith(LearnsWith learnsWith)
     {

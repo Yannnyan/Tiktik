@@ -7,6 +7,8 @@ using Google.Cloud.Firestore;
 public class LearnsWith
 {
     [FirestoreProperty]
+    public int id{get;set;}
+    [FirestoreProperty]
     public int studentid{get;set;}
     [FirestoreProperty]
     public int teacherid{get;set;}
