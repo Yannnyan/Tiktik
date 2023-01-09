@@ -60,6 +60,7 @@ public interface crud_inter{
     public Task<bool> change_t_name_byid(string name, int id);
 
     public Task<bool> change_t_pass_byid(string pass, int id);
+    public Task<bool> change_schedule_byid(int id, Schedule schedule);
     
 
     //------------------------------------------lessons

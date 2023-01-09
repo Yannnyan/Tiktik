@@ -54,7 +54,6 @@ public class testStuff
         new_end_times.Add(new TimeOnly(6, 0).ToString());
         new_end_times.Add(new TimeOnly(7, 0).ToString());
         Schedule schedule = new Schedule();
-        schedule.Id = 0;
         schedule.Starts = new_start_times;
         schedule.Ends = new_end_times;
         await DB.change_schedule_byid(4, schedule);

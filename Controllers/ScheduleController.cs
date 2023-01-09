@@ -30,15 +30,13 @@ public class ScheduleController : ControllerBase
         return NotFound();
     }
     
-    [HttpPost]
-    public ActionResult Post(Schedule times)
+    [HttpPost("{id}")]
+    public ActionResult Post(Schedule times, int id)
     {
-        int id = times.Id;
         if(!times.check_valid_schedule())
             return BadRequest();
         TeacherService.UpdateWorkTimes(id, times.Starts, times.Ends);
         return NoContent();
-        // return CreatedAtAction("Created new Schedule, ", new{times.Id}, times);
     }
     
 }

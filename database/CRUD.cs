@@ -366,7 +366,6 @@ public class CRUD : crud_inter{
             Console.WriteLine("deleted data from Student collection.");
             return true;
         }
-
     }
     
 

@@ -2,10 +2,14 @@
 namespace TiktikHttpServer.Models;
 public class Schedule
 {
-    public int Id{get;set;}
-    public List<string?> Starts{get;set;}
-    public List<string?> Ends{get;set;}
+    public List<string> Starts{get;set;}
+    public List<string> Ends{get;set;}
     public Schedule(){}
+    public Schedule(List<string> starts, List<string> ends)
+    {
+        this.Starts = starts;
+        this.Ends = ends;
+    }
     public bool check_valid_schedule()
     {
         TimeOnly time;

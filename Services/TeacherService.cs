@@ -54,23 +54,16 @@ public class TeacherService
         CrudService.crud.add(Teacher);
     }
 
-    public static void UpdateWorkTimes(int id, List<string?> start, List<string?> end)
+    public static void UpdateWorkTimes(int id, List<string> start, List<string> end)
     {
         Teacher? teacher = Get(id);
         start.ForEach(t => Console.WriteLine(t is null ? "null" : t));
         end.ForEach(t => Console.WriteLine(t is null ? "null" : t));
-        List<string> startValues = teacher.StartTimes;
-        List<string> endValues = teacher.EndTimes;
-        for(int i=0; i< start.Count; i++){
-            if(start[i] is not null)
-                startValues[i] = start[i];
-            if(end[i] is not null)
-                endValues[i] = end[i];
-        }
-        teacher.StartTimes = startValues;
-        teacher.EndTimes = endValues;
-        // TODO: Add database integration
-
+        if(teacher is null)
+            return;
+        CrudService.crud.change_schedule_byid(id, new Schedule(start, end));
+        teacher.StartTimes = start;
+        teacher.EndTimes = end;
     }
     public static List<string> GetStartTime(int id) => Get(id).StartTimes;
     public static List<string> GetEndTime(int id) => Get(id).EndTimes;
