@@ -10,17 +10,22 @@ public class LessonService
     static LessonService()
     {
         Lessons = CrudService.crud.GetAll(new Lesson()).Result.Cast<Lesson>().ToList();
-        nextId = Lessons.Max(std => std.Id) + 1;
-        // Lessons = new List<Lesson>
-        // {
-        //     new Lesson {Id = 1, TeacherId = 1, StudentId = 1, Comment = "Meet me at new zealand."},
-        //     new Lesson {Id = 2, TeacherId = 2, StudentId = 2, Comment = "Ariel, Rehov Hatziyonut."}
-        // };
+        if(Lessons.Count <= 0)
+        {
+            nextId = 1;
+        }
+        else
+        {
+            nextId = Lessons.Max(std => std.Id) + 1;
+        }
+        
     }
     public static List<Lesson> GetAll() => Lessons;
     
     public static List<Lesson> GetByStudent(int studentId)
     {
+        if(Lessons.Count == 0)
+            return new List<Lesson>();
         List<Lesson> lessons = new List<Lesson>();
         foreach(Lesson lesson in Lessons)
         {
@@ -33,6 +38,8 @@ public class LessonService
     }
     public static List<Lesson> GetByTeacher(int teacherId)
     {
+        if(Lessons.Count == 0)
+            return new List<Lesson>();
         List<Lesson> lessons = new List<Lesson>();
         foreach(Lesson lesson in Lessons)
         {
@@ -42,6 +49,12 @@ public class LessonService
             }
         }
         return lessons;
+    }
+    public static int GetAmountLessonsByStudent(int StudentId)
+    {
+        if(StudentService.Get(StudentId) != null)
+            return CrudService.crud.get_my_lessons_as_student(StudentId).Result.Count;
+        return 0;
     }
     public static Lesson? GetById(int lessonId) => Lessons.FirstOrDefault(l => l.Id == lessonId);
 
@@ -59,7 +72,16 @@ public class LessonService
         Lessons.Remove(lesson);
         CrudService.crud.Delete(lesson);
     }
-
+    public static void DeleteLessonsOfStudentId(int StudentId)
+    {
+        // delete all lessons that the student is assigned to
+        Lessons.ForEach((l) => 
+        {
+            if(l.StudentId == StudentId)
+                CrudService.crud.Delete(l);
+            });
+        Lessons.RemoveAll((l) => l.StudentId == StudentId);
+    }
     public static void Update(Lesson lesson)
     {
         var index = Lessons.FindIndex(l => l.Id == lesson.Id);

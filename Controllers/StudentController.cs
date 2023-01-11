@@ -81,6 +81,7 @@ public class StudentController : ControllerBase
         if(teach is null)
             return NotFound("Teacher id is registered but not found.");
         TeacherService.DeleteStudentFromTeacher(StudentId, (int)teachId);
+        StudentService.DeleteTeacherOfStudent(StudentId);
         return Ok();
     }
     // PUT action

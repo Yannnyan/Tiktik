@@ -30,6 +30,13 @@ public class LessonController : ControllerBase
 
         }
     }   
+    [HttpGet("AmountLessons/{studentid}")]
+    public ActionResult<int> Get(int studentid)
+    {
+        if(StudentService.Get(studentid) is null)
+            return NotFound();
+        return LessonService.GetAmountLessonsByStudent(studentid);
+    }
 
     // post
     [HttpPost]

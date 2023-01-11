@@ -264,9 +264,6 @@ public class CRUD : crud_inter{
         }else if(s.Id <= 0){
             Console.WriteLine("incorrect id = {0} input (non-positive)", s.Id);
             return false;
-        }else if(id_exist(s.Id, Students_collection).Result){
-            Console.WriteLine("student id = {0} already exist", s.Id);
-            return false;
         }
         
         DocumentReference docRef = db.Collection(Students_collection).Document(s.Id.ToString());
@@ -443,9 +440,6 @@ public class CRUD : crud_inter{
         }else if(id <= 0){
             Console.WriteLine("incorrect id = {0} input (non-positive)", id);
             return false;
-        }else if(id_exist(id, Teachers_collection).Result){
-            Console.WriteLine("Teacher id = {0} already exist", id);
-            return false;
         }
     
         DocumentReference docRef = db.Collection(Teachers_collection).Document(id.ToString());
@@ -480,11 +474,7 @@ public class CRUD : crud_inter{
         }else if(t.Id <= 0){
             Console.WriteLine("incorrect id = {0} input (non-positive)", t.Id);
             return false;
-        }else if(id_exist(t.Id, Teachers_collection).Result){
-            Console.WriteLine("Teacher id = {0} already exist", t.Id);
-            return false;
         }
-    
         DocumentReference docRef = db.Collection(Teachers_collection).Document(t.Id.ToString());
 
         Dictionary<string, object> newuser = new Dictionary<string, object>
@@ -731,8 +721,8 @@ public class CRUD : crud_inter{
 
     public async Task<bool> add_LearnsWith(LearnsWith learnsWith)
     {
-        CollectionReference learnsWithCollection = db.Collection(LearnsWith_collection);
-        return await learnsWithCollection.AddAsync(learnsWith) != null;
+        DocumentReference learnsWithCollection = db.Collection(LearnsWith_collection).Document(learnsWith.id.ToString());
+        return await learnsWithCollection.SetAsync(learnsWith) != null;
     }
     public async Task<bool> delete_LearnsWith(LearnsWith learnsWith)
     {
@@ -764,6 +754,5 @@ public class CRUD : crud_inter{
         }
         return lst;
     }
-
     
 }

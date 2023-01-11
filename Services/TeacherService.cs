@@ -11,8 +11,10 @@ public class TeacherService
     static TeacherService()
     {
         Teachers = CrudService.crud.GetAll(new Teacher()).Result.Cast<Teacher>().ToList();
-        nextId = Teachers.Max(std => std.Id) + 1;
-
+        if(Teachers.Count != 0)
+            nextId = Teachers.Max(std => std.Id) + 1;
+        else
+            nextId = 1;
         TeacherToStudents = new Dictionary<int, List<int>>();
         updateTeacherToStudents();
     }
@@ -84,6 +86,7 @@ public class TeacherService
         if(index == -1)
             return;
 
+        CrudService.crud.add_teacher(Teacher);
         Teachers[index] = Teacher;
     }
 

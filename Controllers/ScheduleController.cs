@@ -33,8 +33,8 @@ public class ScheduleController : ControllerBase
     [HttpPost("{id}")]
     public ActionResult Post(Schedule times, int id)
     {
-        if(!times.check_valid_schedule())
-            return BadRequest();
+        // if(!times.check_valid_schedule())
+        //     return BadRequest();
         TeacherService.UpdateWorkTimes(id, times.Starts, times.Ends);
         return NoContent();
     }
