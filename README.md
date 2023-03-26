@@ -8,8 +8,7 @@ This repository contains the code we used for the server using ASP.NET CORE MVC 
 1. Application user inteface written in java, for android users using async communication with the server and callbacks for updating the user view.
 2. Server written in ASP.NET CORE MVC for processing and maintaining the bussiness logic of the application, and answering user requests.
 3. Cloud database using Firebase free service, for writing the data, using async communication in the server side and Firebase built in API for C# which contains a ODM aswell.
-![image](https://user-images.githubusercontent.com/82415308/227798090-ec22f0b8-2767-4a86-82c6-6743b438b866.png)
-
+![image](https://user-images.githubusercontent.com/82415308/227798648-998786af-1937-49af-9817-d9eabb822d27.png)
 
 # Bussiness Entities
 - Lesson - The lesson contains the date and time, the comment for the place the student and teacher meets.
